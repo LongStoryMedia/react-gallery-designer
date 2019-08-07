@@ -4,17 +4,6 @@ React Gallery Designer
 
 [![Known Vulnerabilities](https://snyk.io//test/github/LongStoryMedia/react-gallery-designer/badge.svg?targetFile=package.json)](https://snyk.io//test/github/LongStoryMedia/react-gallery-designer?targetFile=package.json)
 
-
-
-
-## Features
-
-- ##### Can be background-image, or src. Just specify they base element tag in props.
-- ##### Loads only if visible in window.
-- ##### Support for srcset and sizes.
-- ##### Placeholder present until src image is loaded (blank by default)
-- ##### Can set custom timeout to delay src image load
-
 ## Installation
 
 #### yarn
@@ -33,16 +22,16 @@ $ npm install react-gallery-designer
 ### images<span style="color:red"> * </span>
 <u>type</u>: array\
 <u>description</u>: Array of objects representing the props for each image. This library uses [react-image-designer](https://github.com/LongStoryMedia/react-image-designer) for each image (and thumbnail) in the gallery. In addition to the [props](https://github.com/LongStoryMedia/react-image-designer#props) from `react-image-designer`, you may also define the following:
-- #### link
-- #### target
-- #### index
-- #### caption
+- link
+- target
+- index
+- caption
 
 additionally the following [props](https://github.com/LongStoryMedia/react-image-designer#props) are not modifiable on the image object because they are either taken care of at the global level, or are handled by `react-gallery-designer` internally (and changing that would break it):
-- #### id
-- #### className
-- #### contain
-- #### tag
+- id
+- className
+- contain
+- tag
 
 ### settings
 - #### lightbox
