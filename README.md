@@ -41,125 +41,140 @@ additionally the following [props](https://github.com/LongStoryMedia/react-image
 - tag
 
 ### settings
-- #### lightbox
+##### - lightbox
 <u>default</u>: false\
 <u>type</u>: boolean\
 <u>description</u>: Displays all images in a `row wrap` flex-box, and expands an image to full screen on click with "next", and "prev" controls. Returns to previous view state on click when expanded.
 
-- #### inview
+##### - inview
 <u>default</u>: 1\
 <u>type</u>: number\
 <u>description</u>: Number of images visible on screen at one time.
 
-- #### auto
+##### - auto
 <u>default</u>: false\
 <u>type</u>: boolean\
 <u>description</u>: If slide should start rotating right away.
 
-- #### noImages
+##### - noImages
 <u>default</u>: false\
 <u>type</u>: boolean\
 <u>description</u>: Useful for a rotating rss feed or similar application.
 
-- #### direction
+##### - direction
 <u>default</u>: "left"\
 <u>type</u>: string\
 <u>description</u>: Direction in which the gallery should rotate. Options include "left", "right", "up", "down".
 
-- #### orientation
+##### - orientation
 <u>default</u>: "horizontal"\
 <u>type</u>: string\
 <u>description</u>: Orient gallery vertically or horizontally.
 
-- #### animation
+##### - animation
 <u>default</u>: "slide"\
 <u>type</u>: string\
 <u>description</u>: Type of animation for gallery. Options include "slide", "carousel", "book", "flip", "fade".
 
-- #### speed
+##### - speed
 <u>default</u>: 2000\
 <u>type</u>: number\
 <u>description</u>: How much time (in milliseconds) each image will remain in place.
 
-- #### timingfn
+##### - timingfn
 <u>default</u>: "ease-in-out"\
 <u>type</u>: string\
 <u>description</u>: css timing function for transitions.
 
-- #### transitionspeed
+##### - transitionspeed
 <u>default</u>: 0.25\
 <u>type</u>: number\
 <u>description</u>: How fast the transitions are.
 
-- #### playpause
+##### - playpause
 <u>default</u>: false\
 <u>type</u>: boolean\
 <u>description</u>: Puts a play/pause button in the top left (while mouse is over gallery container).
 
-- #### pauseonhover
+##### - pauseonhover
 <u>default</u>: false\
 <u>type</u>: boolean\
 <u>description</u>: If the gallery should pause while hovering.
 
-- #### arrows
+##### - arrows
 <u>default</u>: false\
 <u>type</u>: boolean\
 <u>description</u>: Puts arrow on the left and right of the gallery container (while mouse is over gallery container).
 
-- #### advance
+##### - advance
 <u>default</u>: 1\
 <u>type</u>: number\
 <u>description</u>: How many images the gallery should advance every interval.
 
-- #### startposition
+##### - startposition
 <u>default</u>: "center"\
 <u>type</u>: string\
 <u>description</u>: Position of the first image in the gallery relative to other images in view. Options include "left", "right", "center".
 
-- #### showcaptions
+##### - showcaptions
 <u>default</u>: false\
 <u>type</u>: boolean\
 <u>description</u>: If `caption` prop is supplied for each image, display caption over image.
 
-- #### linkslides
+##### - linkslides
 <u>default</u>: false\
 <u>type</u>: boolean\
 <u>description</u>: If `link` prop is supplied for each image, make image a clickable link.
 
-- #### thumbnails
+##### - thumbnails
 <u>default</u>: false\
 <u>type</u>: boolean\
 <u>description</u>: Displays thumbnails under gallery container. Brings corresponding image into view on click.
 
-- #### contain
+##### - contain
 <u>default</u>: false\
 <u>type</u>: boolean\
 <u>description</u>: Sets `background-size` of image to `contain`.
 
-- #### playIcon
+##### - playIcon
 <u>default</u>: "&#9654;"\
 <u>type</u>: string\
 <u>description</u>: HTML to use for play button.
 
-- #### pauseIcon
+##### - pauseIcon
 <u>default</u>: "&#9208;"\
 <u>type</u>: string\
 <u>description</u>: HTML to use for pause button.
 
-- #### nextIcon
+##### - nextIcon
 <u>default</u>: "&#8250;"\
 <u>type</u>: string\
 <u>description</u>: HTML to use for next button.
 
-- #### prevIcon
+##### - prevIcon
 <u>default</u>: "&#8249;"\
 <u>type</u>: string\
 <u>description</u>: HTML to use for prev button.
 
-- #### tag
+##### - tag
 <u>default</u>: "div"\
 <u>type</u>: string\
 <u>description</u>: Tag to use for images. Will use `src` if `img` is used. Else images will render as `background-image`.
+
+##### - imagePercentHigh
+<u>default</u>: thumbnails ? 80 : 100\
+<u>type</u>: number\
+<u>description</u>: Percent of the height of the gallery container to use as the height of each image.
+
+##### - thumbPercentHigh
+<u>default</u>: thumbnails ? 15 : 0\
+<u>type</u>: number\
+<u>description</u>: Percent of the height of the gallery container to use as the height of each thumbnail.
+
+##### - lbSmallPercentHigh
+<u>default</u>: 30\
+<u>type</u>: number\
+<u>description</u>: Percent of the height of the gallery container to use as the height of each small lightbox image.
 
 ### style
 <u>description</u>: Style for to the gallery container.

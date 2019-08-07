@@ -60,8 +60,8 @@ export default class Gallery extends PureComponent {
     pauseIcon: _$(this.props).OBJ(["settings", "pauseIcon"], "&#9208;"),
     nextIcon: _$(this.props).OBJ(["settings", "nextIcon"], "&#8250;"),
     prevIcon: _$(this.props).OBJ(["settings", "prevIcon"], "&#8249;"),
-    slidePercentHigh: _$(this.props).OBJ(
-      ["settings", "slidePercentHigh"],
+    imagePercentHigh: _$(this.props).OBJ(
+      ["settings", "imagePercentHigh"],
       _$(this.props).OBJ(["settings", "thumbnails"]) ? 80 : 100
     ),
     thumbPercentHigh: _$(this.props).OBJ(
@@ -138,7 +138,7 @@ export default class Gallery extends PureComponent {
       lightbox,
       lbSmallPercentHigh,
       thumbPercentHigh,
-      slidePercentHigh
+      imagePercentHigh
     } = this.settings;
     const adv =
       "flip" === animation || "fade" === animation
@@ -183,7 +183,7 @@ export default class Gallery extends PureComponent {
       tag,
       style,
       lightbox,
-      slidePercentHigh
+      imagePercentHigh
     } = this.settings;
     const visibleImgs = vi(animation, inview);
     const extra = ((visibleImgs % 2) + 1) % 2;
@@ -215,12 +215,12 @@ export default class Gallery extends PureComponent {
       const _ref = _$(ref).OBJ(["current"]);
       const translateD = heightAdj(
         style,
-        _$(slidePercentHigh).vh(_ref),
+        _$(imagePercentHigh).vh(_ref),
         (h, u) => `${(h / inview) * (midInview + ro)}${u}`
       );
       const translateU = heightAdj(
         style,
-        _$(slidePercentHigh).vh(_ref),
+        _$(imagePercentHigh).vh(_ref),
         (h, u) => `${(h / inview) * (midInview - lo)}${u}`
       );
       if (lightbox) {
@@ -506,7 +506,7 @@ export default class Gallery extends PureComponent {
       noImages,
       orientation,
       thumbPercentHigh,
-      slidePercentHigh,
+      imagePercentHigh,
       lbSmallPercentHigh
     } = this.settings;
 
@@ -577,7 +577,7 @@ export default class Gallery extends PureComponent {
       defaultHeight
     )} - ${parseInt(thumbnailHeight, 10) * 1.1}px)`;
 
-    const imgHeightHerizontal = `${_$(slidePercentHigh).vh(
+    const imgHeightHerizontal = `${_$(imagePercentHigh).vh(
       _$(ref).OBJ(["current"])
     )}px`;
 
