@@ -4,13 +4,13 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: "src/index.js",
+  entry: "./src/index.js",
   plugins: [
     new CleanWebpackPlugin([`build/react-gallery-designer.js`])
   ],
   output: {
     path: path.resolve(__dirname, "build"),
-    filename: `react-gallery-designer.js`,
+    filename: `react-gallery-designer.min.js`,
     libraryTarget: 'commonjs2'
   },
   module: {

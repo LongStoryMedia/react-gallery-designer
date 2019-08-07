@@ -9,7 +9,7 @@ module.exports = {
     new CleanWebpackPlugin([`umd/react-image-designer.js`])
   ],
   output: {
-    library: '__RID',
+    library: 'GalleryDesigner',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, "umd"),
     filename: `react-image-designer.min.js`

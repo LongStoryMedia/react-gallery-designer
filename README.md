@@ -1,5 +1,9 @@
 React Gallery Designer
 =========================
+[![Build Status](https://travis-ci.org/LongStoryMedia/react-gallery-designer.svg?branch=master)](https://travis-ci.org/LongStoryMedia/react-gallery-designer)
+
+[![Known Vulnerabilities](https://snyk.io//test/github/LongStoryMedia/react-gallery-designer/badge.svg?targetFile=package.json)](https://snyk.io//test/github/LongStoryMedia/react-gallery-designer?targetFile=package.json)
+
 
 
 
@@ -263,3 +267,9 @@ const SuperCoolGallery = props => (
   />
 )
 ```
+
+### Try Things Live
+to test the options, git close this repo, put some images in the 'imgs' directory, and set-up your configuration somewhere in the 'src' directory. Then run ``yarn start ./relative/path/from/src/to/configuration`` or ``npm run start ./relative/path/from/src/to/configuration``. there is an example provided. To run it locally, execute ``yarn start ./examples/example`` or ``npm run start ./examples/example``.
+
+### Contributing
+clone, install, tinker, submit. Thanks!

@@ -213,7 +213,6 @@ export default class Gallery extends PureComponent {
       const translateR = 100 * (midInview + ro) - positionAdjust;
       const translateL = 100 * (midInview - lo) - positionAdjust;
       const _ref = _$(ref).OBJ(["current"]);
-      console.log(_ref)
       const translateD = heightAdj(
         style,
         _$(slidePercentHigh).vh(_ref),

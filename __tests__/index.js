@@ -37,9 +37,8 @@ beforeEach(() => {
     create(<Gallery images={images} settings={settings} {...props} />);
   gallery = createGallery(initSettings);
   instance = gallery.root;
-  children = gallery => gallery.toJSON().children;
-  renderedChildren = gallery =>
-    children(gallery).filter(child => !!child.children);
+  children = (gallery, i) => gallery.toJSON()[i].children;
+  renderedChildren = (gallery, i) => children(gallery, i).filter(child => !!child.children);
   current = gallery => gallery.getInstance();
   loaded = gallery =>
     gallery.toJSON().children.filter(child => !!child.children);
@@ -81,9 +80,9 @@ test("loads additional images as it advances", () => {
 
 test("loads only thumbnails (and all thumbnails) on mount lightbox", () => {
   const lightbox = createGallery({ lightbox: true });
-  expect(renderedChildren(lightbox).length).toEqual(1);
+  expect(renderedChildren(lightbox, 0).length).toEqual(0);
   expect(
-    renderedChildren(lightbox)[0].children.filter(c => c.children).length
+    renderedChildren(lightbox, 1).filter(c => c.children).length
   ).toEqual(ids.length);
   lightbox.unmount();
 });
@@ -92,7 +91,7 @@ test("expands and loads lightbox image on click", () => {
   const lightbox = render(
     <Gallery images={images} settings={{ lightbox: true }} {...props} />
   );
-  const thumb = lightbox.container.firstChild.querySelector("div").firstChild;
+  const thumb = lightbox.container.childNodes[1].querySelector("div");
   const img = lightbox.container.firstChild.querySelector("span");
   expect(img.firstChild).toBeNull();
   fireEvent.click(thumb, {
