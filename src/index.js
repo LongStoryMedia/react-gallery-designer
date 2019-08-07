@@ -327,7 +327,7 @@ export default class Gallery extends PureComponent {
             "book" === animation
               ? "left"
               : "carousel" === animation
-              ? `${(1 / (midInview * 2)) * (midInview + lo) * 100}%`
+              ? `${(1 / (midInview * 2)) * (midInview - lo) * 100}%`
               : "center",
           visibility:
             isLMid || ("book" === animation && lo <= 1) ? "visible" : "hidden",
@@ -346,7 +346,9 @@ export default class Gallery extends PureComponent {
         ...img,
         transform: transform({
           translate:
-            "horizontal" === orientation
+            "carousel" === animation
+              ? "0, 0"
+              : "horizontal" === orientation
               ? `${100 * sideLength}%, 0`
               : `0, ${_height * sideLength}${unit}`,
           translate: `${100 * sideLength}%, 0`,
@@ -790,7 +792,7 @@ export default class Gallery extends PureComponent {
               ...thumbnailStyle,
               display: zoomedIn ? "none" : "flex",
               flexFlow: `row ${lightbox ? "wrap" : ""}`,
-              position: lightbox ? "relative" : "absolute",
+              position: "relative",
               bottom: 0,
               margin: "0 auto",
               width: "100%",

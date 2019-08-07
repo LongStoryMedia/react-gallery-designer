@@ -355,6 +355,12 @@ const SuperCoolGallery = props => (
 
 </script>
 ```
+### Demos
+
+##### lightbox: https://longstorymedia.github.io/react-gallery-designer/examples/lightbox.html
+##### rotator: https://longstorymedia.github.io/react-gallery-designer/examples/rotator.html
+##### rss: https://longstorymedia.github.io/react-gallery-designer/examples/rss.html
+##### carousel: https://longstorymedia.github.io/react-gallery-designer/examples/carousel.html
 
 ### Try Things Live
 To test the options, git clone this repo, put some images in the 'imgs' directory, or grab them from whatever remote resource, and set-up your configuration. Then run ``yarn start ./relative/path/from/src/to/configuration`` or ``npm run start ./relative/path/from/src/to/configuration``.

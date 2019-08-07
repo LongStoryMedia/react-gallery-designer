@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+  <meta charset="UTF-8">
+
   <head>
     <title>React Gallery Designer</title>
     <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
@@ -17,40 +19,7 @@
 
     <script>
       (function() {
-        var ids = [
-          15,
-          20,
-          25,
-          30,
-          35,
-          40,
-          45,
-          50,
-          55,
-          60,
-          65,
-          70,
-          75,
-          80,
-          85,
-          90,
-          95,
-          125,
-          130,
-          135,
-          140,
-          145,
-          150,
-          155,
-          160,
-          165,
-          170,
-          175,
-          180,
-          190,
-          195,
-          200
-        ];
+        var ids = [15, 20, 25, 30, 35, 40, 45];
 
         var imgs = ids.map(function(id, i) {
           return {
@@ -70,7 +39,13 @@
         });
 
         var settings = {
-          lightbox: true
+          animation: "carousel",
+          timingfn: "ease-in-out",
+          inview: 6,
+          direction: "right",
+          speed: 1500,
+          transitionspeed: 0.5,
+          playpause: true
         };
 
 
@@ -78,9 +53,7 @@
           images: imgs,
           settings: settings,
           style: {
-            width: "600px",
-            maxWidth: "95%",
-            margin: "0 auto"
+            height: "250px"
           },
           domId: "react-gallery"
         })

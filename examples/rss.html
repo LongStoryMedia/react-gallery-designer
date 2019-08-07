@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <meta charset="UTF-8">
+
+  <head>
+    <title>React Gallery Designer</title>
+    <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/long-story-library/umd/long-story-library.min.js"></script>
+    <script src="https://unpkg.com/react-gallery-designer/umd/react-gallery-designer.min.js"></script>
+  </head>
+
+  <body style="margin:0">
+
+    <noscript> You Must Enable JavaScript To View This App </noscript>
+
+    <div id="react-gallery"></div>
+
+    <script>
+      (function() {
+
+        _$("https://rss.app/feeds/wVz8jpG6ZOlhgOxg.xml").getXML(function(rss) {
+
+          _$(rss).parseXML(function(doc) {
+
+            var images = Array.from(_$().tags("item", doc), function(item, i) {
+              return {
+                caption: _$().qs("title", item).childNodes[0].nodeValue,
+                link: _$().qs("link", item).childNodes[0].nodeValue,
+                target: true
+              }
+            });
+
+            var settings = {
+              inview: 3,
+              auto: true,
+              playpause: false,
+              pauseonhover: false,
+              animation: "slide",
+              orientation: "vertical",
+              speed: 5000,
+              transitionspeed: 1,
+              arrows: false,
+              advance: 1,
+              showcaptions: true,
+              linkslides: true,
+              thumbnails: false,
+              contain: false,
+              noImages: true,
+              slidePercentHigh: 100
+            };
+
+            return __RGD({
+              images: images,
+              settings: settings,
+              captionStyle: {
+                color: "#595956",
+                fontWeight: "bold",
+                padding: "20px"
+              },
+              imgStyle: {
+                textDecoration: "none",
+                backgroundImage: "linear-gradient(transparent, #d5d5d5)"
+              },
+              style: {
+                width: "300px",
+                height: "400px",
+                margin: "10vh auto",
+                border: "#000 solid 2px"
+              },
+              domId: "react-gallery"
+            });
+
+          });
+        });
+      })()
+    </script>
+  </body>
+
+</html>
