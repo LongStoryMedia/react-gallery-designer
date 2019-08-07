@@ -361,5 +361,10 @@ To test the options, git clone this repo, put some images in the 'imgs' director
 
 There are examples provided. To run them locally, execute ``yarn start ../examples/gallery-example`` or ``npm run start ../examples/gallery-example``.
 
+##### image credits
+Thanks to [APS](https://www.apsnet.org/Pages/default.aspx) for the images provided in the `gallery-example.js` example.
+
+Thanks to my lovely wife Norah @ [Fox & Folk](https://knitfoxandfolk.com/) for the images provided for all the rest.
+
 ### Contributing
 clone, install, tinker, submit pr. Thanks!
