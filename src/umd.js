@@ -1,13 +1,8 @@
-/*
-react-image-designer
-(c) Long Story Media
-@license MIT
-*/
 import React from "react";
-import { render } from "react-dom";
+import ReactDOM from "react-dom";
 import GalleryDesigner from "./";
 
-({
+global.__RGD = ({
   src,
   placeholder,
   style,
@@ -22,9 +17,10 @@ import GalleryDesigner from "./";
   captionClass,
   thumbnailClass,
   controlClass,
+  domId,
   ...props
-}) =>
-  render(
+}) => {
+  return ReactDOM.render(
     <GalleryDesigner
       style={style}
       thumbnailStyle={thumbnailStyle}
@@ -42,3 +38,4 @@ import GalleryDesigner from "./";
     />,
     document.getElementById(domId)
   );
+};
