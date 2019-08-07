@@ -1,6 +1,6 @@
 {
   "name": "react-gallery-designer",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "react component for creating image galleries, carousels, lightbox-like layouts and more",
   "author": "Scott Long <longstoryscott@gmail.com>",
   "keywords": [
@@ -88,19 +88,19 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.8.0",
     "jsdom": "^15.1.1",
+    "long-story-library": "^0.0.8",
     "raf-polyfill": "^1.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-test-renderer": "^16.8.6",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14",
-    "long-story-library": "^0.0.8"
+    "webpack-dev-server": "^3.1.14"
   },
   "peerDependencies": {
+    "long-story-library": "^0.0.8",
     "react": "^15.0.0-0 || ^16.0.0-0",
-    "react-dom": "^15.0.0-0 || ^16.0.0-0",
-    "long-story-library": "^0.0.8"
+    "react-dom": "^15.0.0-0 || ^16.0.0-0"
   },
   "dependencies": {
     "react-image-designer": "^1.1.15"
