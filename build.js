@@ -6,9 +6,11 @@ process.on("unhandledRejection", err => {
   throw err;
 });
 
+console.log(process.argv)
+
 const path = require("path");
 const webpack = require("webpack");
-const webpackConfig = require(`./webpack.config.prod`);
+const webpackConfig = require(`./webpack.config.${process.argv[2]}`);
 
 webpack(webpackConfig, (err, stats) => {
   if (err) throw err;

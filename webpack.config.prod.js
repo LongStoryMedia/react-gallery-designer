@@ -27,7 +27,32 @@ module.exports = {
       }
     ]
   },
-  externals: {
-    react: "commonjs react"
-  }
+  externals: [
+    {
+      'react': {
+        root: 'React',
+        commonjs2: 'react',
+        commonjs: 'react',
+        amd: 'react'
+      },
+      'react-dom': {
+        root: 'ReactDom',
+        commonjs2: 'react-dom',
+        commonjs: 'react-dom',
+        amd: 'react-dom'
+      },
+      "long-story-library": {
+        root: "_$",
+        commonjs2: "long-story-library",
+        commonjs: "long-story-library",
+        amd: "long-story-library"
+      },
+      "react-image-designer": {
+        root: "__RID",
+        commonjs2: "react-image-designer",
+        commonjs: "react-image-designer",
+        amd: "react-image-designer"
+      }
+    }
+  ]
 };

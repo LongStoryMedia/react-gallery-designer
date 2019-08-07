@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <title>React Gallery Designer</title>
+    <script src="https://unpkg.com/long-story-library/umd/long-story-library.min.js"></script>
+    <script src="https://unpkg.com/react-image-designer/umd/react-image-designer.min.js"></script>
+    <script src="https://unpkg.com/react-gallery-designer/umd/react-gallery-designer.min.js"></script>
+    <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
+  </head>
+
+  <body style="margin:0">
+
+    <noscript> You Must Enable JavaScript To View This App </noscript>
+
+    <div id="react-gallery"></div>
+
+    <script>
+      var ids = [
+        15,
+        20,
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60,
+        65,
+        70,
+        75,
+        80,
+        85,
+        90,
+        95,
+        125,
+        130,
+        135,
+        140,
+        145,
+        150,
+        155,
+        160,
+        165,
+        170,
+        175,
+        180,
+        190,
+        195,
+        200
+      ];
+
+      var imgs = ids.map(function(id, i) {
+        return {
+            src: `/imgs/IMG_${id}-1900.jpg`,
+            placeholder: `/imgs/IMG_${id}-100.jpg`,
+            srcset: `/imgs/IMG_${id}-1900.jpg 1900w,
+                    /imgs/IMG_${id}-1200.jpg 1200w,
+                    /imgs/IMG_${id}-768.jpg 768w,
+                    /imgs/IMG_${id}-480.jpg 480w,
+                    /imgs/IMG_${id}-300.jpg 300w`,
+            sizes: `(max-width: 320px) 320w,
+                    (max-width: 480px) 480w,
+                    (max-width: 768px) 768w,
+                    (max-width: 1200px) 1200w,
+                    1900px`
+          }
+        });
+
+      var settings = {
+        lightbox: true
+      };
+
+      return __RGD({
+        images: imgs,
+        settings: settings,
+        style: {
+          width: "600px",
+          maxWidth: "95%",
+          margin: "0 auto"
+        },
+        domId: "react-gallery"
+      })
+
+    </script>
+  </body>
+
+</html>

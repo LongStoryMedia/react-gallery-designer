@@ -4,15 +4,15 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: "./src/index.js",
+  entry: "./src/umd.js",
   plugins: [
     new CleanWebpackPlugin([`umd/react-image-designer.js`])
   ],
   output: {
-    library: 'GalleryDesigner',
+    library: '__RGD',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, "umd"),
-    filename: `react-image-designer.min.js`
+    filename: `react-gallery-designer.min.js`
   },
   module: {
     rules: [
@@ -41,6 +41,18 @@ module.exports = {
         commonjs2: 'react-dom',
         commonjs: 'react-dom',
         amd: 'react-dom'
+      },
+      "long-story-library": {
+        root: "_$",
+        commonjs2: "long-story-library",
+        commonjs: "long-story-library",
+        amd: "long-story-library"
+      },
+      "react-image-designer": {
+        root: "__RID",
+        commonjs2: "react-image-designer",
+        commonjs: "react-image-designer",
+        amd: "react-image-designer"
       }
     }
   ],

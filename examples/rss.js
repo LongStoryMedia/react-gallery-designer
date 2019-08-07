@@ -1,5 +1,5 @@
 import _$ from "long-story-library";
-import Gallery from "../Gallery";
+import Gallery from "../src/";
 import React from "react";
 import { render } from "react-dom";
 

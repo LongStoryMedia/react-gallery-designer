@@ -16,10 +16,17 @@ $ yarn add react-gallery-designer
 $ npm install react-gallery-designer
 ```
 
-## Props
-<span style="color:red"> * </span>: REQUIRED
+The UMD build is also available on [unpkg](https://unpkg.com):
 
-### images<span style="color:red"> * </span>
+```html
+<script src="https://unpkg.com/react-gallery-designer/umd/react-gallery-designer.min.js"></script>
+```
+
+If you use the UMD build you can find the library on `window.__RGD`.
+
+## Props
+
+### images (required)
 <u>type</u>: array\
 <u>description</u>: Array of objects representing the props for each image. This library uses [react-image-designer](https://github.com/LongStoryMedia/react-image-designer) for each image (and thumbnail) in the gallery. In addition to the [props](https://github.com/LongStoryMedia/react-image-designer#props) from `react-image-designer`, you may also define the following:
 - link
@@ -190,7 +197,9 @@ additionally the following [props](https://github.com/LongStoryMedia/react-image
 ### controlClass
 <u>description</u>: Class for the play/pause and next/prev buttons.
 
-## Example
+## examples
+
+#### commonjs
 ```js
 import Gallery from "react-gallery-designer";
 
@@ -225,7 +234,7 @@ const settings = {
   lightbox: false,
   inview: 5,
   auto: true,
-  noImages: false,<
+  noImages: false,
   direction: "right",
   orientation: "horizontal",
   animation: "carousel",
@@ -257,8 +266,85 @@ const SuperCoolGallery = props => (
 )
 ```
 
+#### umd
+<sub>see ./examples/umdLightbox.html</sub>
+```html
+<div id="react-gallery"></div>
+<script>
+  var ids = [
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60,
+    65,
+    70,
+    75,
+    80,
+    85,
+    90,
+    95,
+    125,
+    130,
+    135,
+    140,
+    145,
+    150,
+    155,
+    160,
+    165,
+    170,
+    175,
+    180,
+    190,
+    195,
+    200
+  ];
+
+  var imgs = ids.map(function(id, i) {
+    return {
+        src: `/imgs/IMG_${id}-1900.jpg`,
+        placeholder: `/imgs/IMG_${id}-100.jpg`,
+        srcset: `/imgs/IMG_${id}-1900.jpg 1900w,
+                /imgs/IMG_${id}-1200.jpg 1200w,
+                /imgs/IMG_${id}-768.jpg 768w,
+                /imgs/IMG_${id}-480.jpg 480w,
+                /imgs/IMG_${id}-300.jpg 300w`,
+        sizes: `(max-width: 320px) 320w,
+                (max-width: 480px) 480w,
+                (max-width: 768px) 768w,
+                (max-width: 1200px) 1200w,
+                1900px`
+      }
+    });
+
+  var settings = {
+    lightbox: true
+  };
+
+  return __RGD({
+    images: imgs,
+    settings: settings,
+    style: {
+      width: "600px",
+      maxWidth: "95%",
+      margin: "0 auto"
+    },
+    domId: "react-gallery"
+  })
+
+</script>
+```
+
 ### Try Things Live
-to test the options, git close this repo, put some images in the 'imgs' directory, and set-up your configuration somewhere in the 'src' directory. Then run ``yarn start ./relative/path/from/src/to/configuration`` or ``npm run start ./relative/path/from/src/to/configuration``. there is an example provided. To run it locally, execute ``yarn start ./examples/example`` or ``npm run start ./examples/example``.
+To test the options, git clone this repo, put some images in the 'imgs' directory, or grab them from whatever remote resource, and set-up your configuration. Then run ``yarn start ./relative/path/from/src/to/configuration`` or ``npm run start ./relative/path/from/src/to/configuration``.
+
+There are examples provided. To run them locally, execute ``yarn start ../examples/gallery-example`` or ``npm run start ../examples/gallery-example``.
 
 ### Contributing
-clone, install, tinker, submit. Thanks!
+clone, install, tinker, submit pr. Thanks!
