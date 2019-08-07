@@ -1,0 +1,104 @@
+{
+  "name": "react-gallery-designer",
+  "version": "0.0.0",
+  "description": "react component for creating image galleries, carousels, lightbox-like layouts and more",
+  "author": "Scott Long <longstoryscott@gmail.com>",
+  "keywords": [
+    "react",
+    "image",
+    "gallery",
+    "design",
+    "dynamic",
+    "progressive",
+    "lightbox",
+    "carousel",
+    "slider"
+  ],
+  "license": "WTFPL",
+  "jest": {
+    "testMatch": [
+      "<rootDir>/?(src/)?(**/)__tests__/?(**/)*.{js,jsx,mjs}"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:react/recommended"
+    ],
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 9,
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "react/prop-types": "off",
+      "no-implied-eval": 1,
+      "no-unused-expressions": 1,
+      "no-extra-bind": 1,
+      "default-case": 1,
+      "class-methods-use-this": 1
+    }
+  },
+  "scripts": {
+    "start": "node start.js",
+    "test-watch": "node test.js --watchAll",
+    "test": "node test.js",
+    "build": "node build.js prod",
+    "prepublish": "npm run test --scripts-prepend-node-path && npm run build --scripts-prepend-node-path && npm run umd --scripts-prepend-node-path",
+    "umd": "node build.js umd"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.0.0",
+    "@testing-library/react": "^8.0.7",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "clean-webpack-plugin": "^1.0.0",
+    "core-js": "^2.6.3",
+    "eslint": "^5.7.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.14.3",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.8.0",
+    "jsdom": "^15.1.1",
+    "raf-polyfill": "^1.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-test-renderer": "^16.8.6",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0-0 || ^16.0.0-0",
+    "react-dom": "^15.0.0-0 || ^16.0.0-0"
+  },
+  "dependencies": {
+    "long-story-library": "^0.0.8",
+    "react-image-designer": "^1.1.15"
+  }
+}
