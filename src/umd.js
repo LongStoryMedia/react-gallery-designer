@@ -1,39 +1,44 @@
-import "core-js/es6/map";
-import "core-js/es6/set";
-import "raf-polyfill";
-
-import Gallery from "./";
+/*
+react-image-designer
+(c) Long Story Media
+@license MIT
+*/
 import React from "react";
 import { render } from "react-dom";
+import GalleryDesigner from "./";
 
-export default ({
-  settings,
-  images,
-  domId,
+({
+  src,
+  placeholder,
+  style,
+  thumbnailStyle,
+  imgStyle,
+  captionStyle,
+  lightboxStyle,
+  controlStyle,
   className,
+  id,
   imgClass,
   captionClass,
-  playicon,
-  pauseicon,
-  nexticon,
-  previcon,
-  style,
-  imgStyle,
+  thumbnailClass,
+  controlClass,
   ...props
-}) => render(
-  <Gallery
-    images={images}
-    settings={settings}
-    className={className}
-    imgClass={imgClass}
-    captionClass={captionClass}
-    playIcon={playicon}
-    pauseIcon={pauseicon}
-    nextIcon={nexticon}
-    prevIcon={previcon}
-    style={style}
-    imgStyle={imgStyle}
-    {...props}
-  />,
-  document.getElementById(domId)
-);
+}) =>
+  render(
+    <GalleryDesigner
+      style={style}
+      thumbnailStyle={thumbnailStyle}
+      imgStyle={imgStyle}
+      captionStyle={captionStyle}
+      lightboxStyle={lightboxStyle}
+      controlStyle={controlStyle}
+      className={className}
+      id={id}
+      imgClass={imgClass}
+      captionClass={captionClass}
+      thumbnailClass={thumbnailClass}
+      controlClass={controlClass}
+      {...props}
+    />,
+    document.getElementById(domId)
+  );

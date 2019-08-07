@@ -4,7 +4,6 @@
   <head>
     <title>React Gallery Designer</title>
     <script src="https://unpkg.com/long-story-library/umd/long-story-library.min.js"></script>
-    <script src="https://unpkg.com/react-image-designer/umd/react-image-designer.min.js"></script>
     <script src="https://unpkg.com/react-gallery-designer/umd/react-gallery-designer.min.js"></script>
     <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
@@ -17,43 +16,44 @@
     <div id="react-gallery"></div>
 
     <script>
-      var ids = [
-        15,
-        20,
-        25,
-        30,
-        35,
-        40,
-        45,
-        50,
-        55,
-        60,
-        65,
-        70,
-        75,
-        80,
-        85,
-        90,
-        95,
-        125,
-        130,
-        135,
-        140,
-        145,
-        150,
-        155,
-        160,
-        165,
-        170,
-        175,
-        180,
-        190,
-        195,
-        200
-      ];
+      (function() {
+        var ids = [
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60,
+          65,
+          70,
+          75,
+          80,
+          85,
+          90,
+          95,
+          125,
+          130,
+          135,
+          140,
+          145,
+          150,
+          155,
+          160,
+          165,
+          170,
+          175,
+          180,
+          190,
+          195,
+          200
+        ];
 
-      var imgs = ids.map(function(id, i) {
-        return {
+        var imgs = ids.map(function(id, i) {
+          return {
             src: `/imgs/IMG_${id}-1900.jpg`,
             placeholder: `/imgs/IMG_${id}-100.jpg`,
             srcset: `/imgs/IMG_${id}-1900.jpg 1900w,
@@ -69,21 +69,21 @@
           }
         });
 
-      var settings = {
-        lightbox: true
-      };
+        var settings = {
+          lightbox: true
+        };
 
-      return __RGD({
-        images: imgs,
-        settings: settings,
-        style: {
-          width: "600px",
-          maxWidth: "95%",
-          margin: "0 auto"
-        },
-        domId: "react-gallery"
-      })
-
+        return __RGD({
+          images: imgs,
+          settings: settings,
+          style: {
+            width: "600px",
+            maxWidth: "95%",
+            margin: "0 auto"
+          },
+          domId: "react-gallery"
+        })
+      })()
     </script>
   </body>
 

@@ -3,7 +3,7 @@ const webpack = require("webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
-  mode: process.env.NODE_ENV,
+  mode: "production",
   entry: "./src/umd.js",
   plugins: [
     new CleanWebpackPlugin([`umd/react-image-designer.js`])
@@ -47,12 +47,6 @@ module.exports = {
         commonjs2: "long-story-library",
         commonjs: "long-story-library",
         amd: "long-story-library"
-      },
-      "react-image-designer": {
-        root: "__RID",
-        commonjs2: "react-image-designer",
-        commonjs: "react-image-designer",
-        amd: "react-image-designer"
       }
     }
   ],
