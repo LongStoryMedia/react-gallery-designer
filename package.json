@@ -1,6 +1,6 @@
 {
   "name": "react-gallery-designer",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "react component for creating image galleries, carousels, lightbox-like layouts and more",
   "author": "Scott Long <longstoryscott@gmail.com>",
   "keywords": [
