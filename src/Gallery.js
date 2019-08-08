@@ -3,10 +3,6 @@ react-gallery-designer
 (c) Long Story Media
 @license MIT
 */
-import "core-js/es6/map";
-import "core-js/es6/set";
-import "raf-polyfill";
-
 import React, { PureComponent, createRef } from "react";
 import ImageDesigner from "react-image-designer";
 import _$ from "long-story-library";
@@ -25,7 +21,7 @@ import {
   tryDecode
 } from "./utils";
 
-export default class Gallery extends PureComponent {
+export default class extends PureComponent {
   state = {
     isPaused: true,
     slide: 0,
@@ -56,23 +52,22 @@ export default class Gallery extends PureComponent {
     thumbnails: _$(this.props).OBJ(["settings", "thumbnails"]),
     lightbox: _$(this.props).OBJ(["settings", "lightbox"]),
     contain: _$(this.props).OBJ(["settings", "contain"]),
-    playIcon: _$(this.props).OBJ(["settings", "playIcon"], "&#9654;"),
-    pauseIcon: _$(this.props).OBJ(["settings", "pauseIcon"], "&#9208;"),
-    nextIcon: _$(this.props).OBJ(["settings", "nextIcon"], "&#8250;"),
-    prevIcon: _$(this.props).OBJ(["settings", "prevIcon"], "&#8249;"),
-    imagePercentHigh: _$(this.props).OBJ(
-      ["settings", "imagePercentHigh"],
+    playIcon: _$(this.props).OBJ(["settings", "playicon"], "&#9654;"),
+    pauseIcon: _$(this.props).OBJ(["settings", "pauseicon"], "&#9208;"),
+    nextIcon: _$(this.props).OBJ(["settings", "nexticon"], "&#8250;"),
+    prevIcon: _$(this.props).OBJ(["settings", "previcon"], "&#8249;"),
+    slidePercentHigh: _$(this.props).OBJ(
+      ["settings", "previcon"],
       _$(this.props).OBJ(["settings", "thumbnails"]) ? 80 : 100
     ),
     thumbPercentHigh: _$(this.props).OBJ(
-      ["settings", "thumbPercentHigh"],
+      ["settings", "previcon"],
       _$(this.props).OBJ(["settings", "thumbnails"]) ? 15 : 0
     ),
-    lbSmallPercentHigh: _$(this.props).OBJ(
-      ["settings", "lbSmallPercentHigh"],
-      30
-    ),
-    tag: _$(this.props).OBJ(["settings", "tag"], "div")
+    lbSmallPercentHigh: _$(this.props).OBJ(["settings", "previcon"], 30),
+    tag: _$(this.props).OBJ(["settings", "lightbox"])
+      ? "img"
+      : _$(this.props).OBJ(["settings", "tag"], "div")
   };
 
   componentDidMount() {
@@ -101,6 +96,27 @@ export default class Gallery extends PureComponent {
     }
   }
 
+  onThumbnailClick = e => {
+    const { slide, images } = this.state;
+    const { id } = e.currentTarget;
+    const slideOpts = id.split(",");
+    const idxs = slideOpts.map(i => parseInt(i, 10));
+    const smOffset = i =>
+      leftOffset(images, i, slide) < rightOffset(images, i, slide)
+        ? leftOffset(images, i, slide)
+        : rightOffset(images, i, slide);
+    const setSlide = idxs.reduce((a, b) => {
+      const _a = smOffset(a);
+      const _b = smOffset(b);
+      return _a < _b ? a : b;
+    });
+    this.setState(prevState => ({
+      slide: setSlide,
+      images: this.mapSlides(images, setSlide, prevState.images),
+      zoomedIn: this.settings.lightbox && true
+    }));
+  };
+
   setThumbId = idx => {
     const { images } = this.props;
     let i = this.state.images.length / images.length,
@@ -109,7 +125,7 @@ export default class Gallery extends PureComponent {
       id.push(idx + i * images.length - images.length);
       i--;
     }
-    return "thumbNailImg_" + id.join(",");
+    return id.join(",");
   };
 
   playPauseCtrl = () => {
@@ -138,7 +154,7 @@ export default class Gallery extends PureComponent {
       lightbox,
       lbSmallPercentHigh,
       thumbPercentHigh,
-      imagePercentHigh
+      slidePercentHigh
     } = this.settings;
     const adv =
       "flip" === animation || "fade" === animation
@@ -167,7 +183,7 @@ export default class Gallery extends PureComponent {
         this.setState({ slide: rightIdx });
         return this.mapSlides(imgs, rightIdx);
       }
-      return lightbox ? this.mapSlides(imgs, -1) : this.mapSlides(imgs, 0);
+      return lightbox ? this.mapSlides(imgs, 0) : this.mapSlides(imgs, 0);
     }
     return this.setSlides(
       imgs.concat(imgs.map((img, i) => ({ ...img, isLoaded: false, index: i })))
@@ -183,7 +199,7 @@ export default class Gallery extends PureComponent {
       tag,
       style,
       lightbox,
-      imagePercentHigh
+      slidePercentHigh
     } = this.settings;
     const visibleImgs = vi(animation, inview);
     const extra = ((visibleImgs % 2) + 1) % 2;
@@ -211,17 +227,18 @@ export default class Gallery extends PureComponent {
           ? 100
           : 0;
       const translateR = 100 * (midInview + ro) - positionAdjust;
-      const translateL = 100 * (midInview - lo) - positionAdjust;
       const _ref = _$(ref).OBJ(["current"]);
       const translateD = heightAdj(
         style,
-        _$(imagePercentHigh).vh(_ref),
+        _$(slidePercentHigh).vh(_ref),
         (h, u) => `${(h / inview) * (midInview + ro)}${u}`
       );
       const translateU = heightAdj(
         style,
-        _$(imagePercentHigh).vh(_ref),
-        (h, u) => `${(h / inview) * (midInview - lo)}${u}`
+        _$(slidePercentHigh).vh(_ref),
+        (h, u) => {
+          return `${(h / inview) * (midInview - lo)}${u}`;
+        }
       );
       if (lightbox) {
         if (img.index === setImg) return { ...img, isLoaded: true };
@@ -294,7 +311,7 @@ export default class Gallery extends PureComponent {
             ("carousel" === animation || "book" === animation) && ro === 1
               ? 7
               : ("carousel" === animation || "book" === animation) && ro === 2
-              ? 8
+              ? 6
               : "carousel" === animation && ro >= midInview + extra
               ? -1
               : ""
@@ -308,7 +325,7 @@ export default class Gallery extends PureComponent {
               "flip" === animation
                 ? "0, 0"
                 : "horizontal" === orientation
-                ? `${isLMid ? translateL : -(translateL / midInview)}%, 0`
+                ? `${translateL}%, 0`
                 : `0, ${translateU}`,
             scale:
               "carousel" === animation
@@ -322,7 +339,7 @@ export default class Gallery extends PureComponent {
                 : "0"
           }),
           transformStyle: "preserve-3d",
-          backfaceVisibility: ("carousel" === animation || "book" === animation) && lo === 1 ? "visible" : "hidden",
+          backfaceVisibility: "hidden",
           transformOrigin:
             "book" === animation
               ? "left"
@@ -338,7 +355,7 @@ export default class Gallery extends PureComponent {
             ("carousel" === animation || "book" === animation) && lo === 1
               ? 8
               : "carousel" === animation && lo >= midInview
-              ? 1
+              ? -1
               : ""
         };
       }
@@ -349,6 +366,7 @@ export default class Gallery extends PureComponent {
             "horizontal" === orientation
               ? `${100 * sideLength}%, 0`
               : `0, ${_height * sideLength}${unit}`,
+          translate: `${100 * sideLength}%, 0`,
           scale: "carousel" === animation ? ".5" : "1",
           rotateY: "0"
         }),
@@ -462,28 +480,6 @@ export default class Gallery extends PureComponent {
 
   zoom = () => this.setState({ zoomedIn: this.state.zoomedIn ? false : true });
 
-  onThumbnailClick = e => {
-    const { slide, images } = this.state;
-    const { id } = e.target;
-    const ids = id.split("thumbNailImg_").pop();
-    const slideOpts = ids.split(",");
-    const idxs = slideOpts.map(i => Number(i));
-    const smOffset = i =>
-      leftOffset(images, i, slide) < rightOffset(images, i, slide)
-        ? leftOffset(images, i, slide)
-        : rightOffset(images, i, slide);
-    const setSlide = idxs.reduce((a, b) => {
-      const _a = smOffset(a);
-      const _b = smOffset(b);
-      return _a < _b ? a : b;
-    });
-    this.setState(prevState => ({
-      slide: setSlide,
-      images: this.mapSlides(images, setSlide, prevState.images),
-      zoomedIn: this.settings.lightbox && true
-    }));
-  };
-
   render() {
     const { images, isPaused, arrowOpacity, zoomedIn, slide, ref } = this.state;
 
@@ -505,7 +501,7 @@ export default class Gallery extends PureComponent {
       noImages,
       orientation,
       thumbPercentHigh,
-      imagePercentHigh,
+      slidePercentHigh,
       lbSmallPercentHigh
     } = this.settings;
 
@@ -521,6 +517,7 @@ export default class Gallery extends PureComponent {
       captionClass,
       thumbnailClass,
       controlClass,
+      children,
       id
     } = this.props;
 
@@ -560,30 +557,21 @@ export default class Gallery extends PureComponent {
 
     const thumbnailHeight = heightAdj(
       thumbnailStyle,
-      `${
-        lightbox
-          ? _$(lbSmallPercentHigh).vh()
-          : _$(thumbPercentHigh).vh(_$(ref).OBJ(["current"]))
-      }px`
+      `${_$(lightbox ? `${lbSmallPercentHigh}px` : `${thumbPercentHigh}px`).vh(
+        _$(ref).OBJ(["current"])
+      )}px`
     );
 
-    const thumbAdj = parseInt(thumbnailHeight, 10);
-
-    const defaultHeight = `${_$(50).vh() - thumbAdj}px`;
-
-    const sliderHeight = `calc(${_$(style).OBJ(
-      ["height"],
-      defaultHeight
-    )} - ${parseInt(thumbnailHeight, 10) * 1.1}px)`;
-
-    const imgHeightHerizontal = `${_$(imagePercentHigh).vh(
-      _$(ref).OBJ(["current"])
-    )}px`;
-
-    const imgHeightVertical = `calc(${sliderHeight} / ${visibleImgs})`;
-
     const slideHeight =
-      orientation === "vertical" ? imgHeightVertical : imgHeightHerizontal;
+      orientation === "horizontal"
+        ? `${_$(slidePercentHigh).vh(_$(ref).OBJ(["current"]))}px`
+        : heightAdj(
+            style,
+            `${_$(slidePercentHigh).vh(_$(ref).OBJ(["current"]))}px`,
+            (h, u) => `${h / inview}${u}`
+          );
+
+    const sliderHeight = heightAdj(style, `${_$(50).vh()}px`);
 
     const BoxTag = linkslides && !lightbox ? "a" : "span";
 
@@ -594,7 +582,7 @@ export default class Gallery extends PureComponent {
       opacity: lightbox ? 1 : arrowOpacity,
       ...prefix("transition", "opacity ease-in-out 0.25s"),
       backgroundColor: "rgba(150, 150, 150, 0.5)",
-      width: "auto",
+      width: "1em",
       height: "1.35em",
       textAlign: "center",
       cursor: "pointer",
@@ -607,8 +595,6 @@ export default class Gallery extends PureComponent {
             position: "fixed",
             height: "100vh",
             width: "100vw",
-            maxHeight: "100vh",
-            maxWidth: "100vw",
             top: 0,
             bottom: 0,
             left: 0,
@@ -645,7 +631,7 @@ export default class Gallery extends PureComponent {
       className: imgClass,
       contain: contain,
       tag: tag,
-      lazy: true
+      lazy: false
     });
     return (
       <>
@@ -665,8 +651,8 @@ export default class Gallery extends PureComponent {
             overflow: lightbox ? "auto" : "hidden",
             position: _$(style).OBJ(["position"], "relative"),
             width: _$(style).OBJ(["width"], "100%"),
-            ...style,
             height: !lightbox ? sliderHeight : "",
+            ...style,
             ...zoomedInStyle()
           }}
           id={id}
@@ -684,7 +670,6 @@ export default class Gallery extends PureComponent {
                     : "react-gallery-slide"
                 }
                 style={{
-                  zIndex: lightbox && zoomedIn && img.index === slide ? 20 : "",
                   ...animationStyle(img),
                   width:
                     orientation === "horizontal" && !lightbox
@@ -694,6 +679,7 @@ export default class Gallery extends PureComponent {
                   ...prefix("transformStyle", img.transformStyle),
                   position: "absolute",
                   display: lightbox && !zoomedIn ? "none" : "block",
+                  zIndex: lightbox && zoomedIn && img.index === slide ? 20 : "",
                   textAlign: "center",
                   cursor: lightbox
                     ? zoomedIn
@@ -714,10 +700,10 @@ export default class Gallery extends PureComponent {
                 target={img.target ? "_blank" : ""}
                 rel={img.target ? "noopener noreferrer" : ""}
               >
-                {img.children}
                 {img.isLoaded &&
                   (tag !== "img" ? (
                     <ImageDesigner {...imgProps(img, i)}>
+                      {children}
                       {showcaptions && (
                         <div
                           className={captionClass}
@@ -783,62 +769,62 @@ export default class Gallery extends PureComponent {
               }}
             />
           )}
-        </div>
-        {(thumbnails || lightbox) && (
-          <div
-            className={thumbnailClass}
-            style={{
-              ...thumbnailStyle,
-              width: "100%",
-              ...style,
-              display: zoomedIn ? "none" : "flex",
-              flexFlow: `row ${lightbox ? "wrap" : ""}`,
-              position: "relative",
-              margin: "0 auto",
-              justifyContent: "space-around"
-            }}
-          >
-            {images &&
-              this.props.images.map(
-                (img, i) =>
-                  i >= 0 && (
-                    <div
-                      onClick={this.onThumbnailClick}
-                      id={this.setThumbId(i)}
-                      key={["thumb", i].join("-")}
-                      style={{
-                        width: lightbox ? "" : "100%",
-                        margin: lightbox ? "25px" : "",
-                        maxWidth: lightbox
-                          ? ""
-                          : `${100 / this.props.images.length}%`,
-                        cursor: "pointer",
-                        zIndex: 11,
-                        position: "relative",
-                        height: thumbnailHeight,
-                        textAlign: "center"
-                      }}
-                    >
-                      <ImageDesigner
-                        src={img.src}
-                        placeholder={
-                          img.placeholder ? img.placeholder : img.src
-                        }
-                        srcset={img.srcset}
-                        id={img.thumbId}
+          {(thumbnails || lightbox) && (
+            <div
+              className={thumbnailClass}
+              style={{
+                ...thumbnailStyle,
+                display: zoomedIn ? "none" : "flex",
+                flexFlow: `row ${lightbox ? "wrap" : ""}`,
+                position: lightbox ? "relative" : "absolute",
+                bottom: 0,
+                padding: "10px",
+                margin: "0 auto",
+                width: "100%",
+                justifyContent: "space-around"
+              }}
+            >
+              {images &&
+                this.props.images.map(
+                  (img, i) =>
+                    i >= 0 && (
+                      <div
+                        onClick={this.onThumbnailClick}
+                        id={this.setThumbId(i)}
+                        key={["thumb", i].join("-")}
                         style={{
+                          width: lightbox ? "" : "100%",
+                          margin: lightbox ? "25px" : "",
+                          maxWidth: lightbox
+                            ? ""
+                            : `${100 / this.props.images.length}%`,
+                          cursor: "pointer",
+                          zIndex: 11,
+                          position: "relative",
                           height: thumbnailHeight,
-                          margin: "auto",
-                          maxWidth: "90%",
-                          ...thumbnailStyle
+                          textAlign: "center"
                         }}
-                        tag="img"
-                      />
-                    </div>
-                  )
-              )}
-          </div>
-        )}
+                      >
+                        <ImageDesigner
+                          src={img.src}
+                          placeholder={
+                            img.placeholder ? img.placeholder : img.src
+                          }
+                          srcset={img.srcset}
+                          id={img.thumbId}
+                          style={{
+                            height: thumbnailHeight,
+                            margin: "auto",
+                            ...thumbnailStyle
+                          }}
+                          tag="img"
+                        />
+                      </div>
+                    )
+                )}
+            </div>
+          )}
+        </div>
       </>
     );
   }

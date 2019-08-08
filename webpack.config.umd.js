@@ -3,14 +3,13 @@ const webpack = require("webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
-  mode: "production",
+  mode: process.env.NODE_ENV,
   entry: "./src/umd.js",
   plugins: [
     new CleanWebpackPlugin([`umd/react-image-designer.js`])
   ],
   output: {
-    // library: '__RGD',
-    libraryExport: "__RGD",
+    library: '__RGD',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, "umd"),
     filename: `react-gallery-designer.min.js`
@@ -38,7 +37,7 @@ module.exports = {
         amd: 'react'
       },
       'react-dom': {
-        root: 'ReactDOM',
+        root: 'ReactDom',
         commonjs2: 'react-dom',
         commonjs: 'react-dom',
         amd: 'react-dom'
@@ -48,6 +47,12 @@ module.exports = {
         commonjs2: "long-story-library",
         commonjs: "long-story-library",
         amd: "long-story-library"
+      },
+      "react-image-designer": {
+        root: "__RID",
+        commonjs2: "react-image-designer",
+        commonjs: "react-image-designer",
+        amd: "react-image-designer"
       }
     }
   ],

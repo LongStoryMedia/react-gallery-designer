@@ -14,22 +14,9 @@
     "carousel",
     "slider"
   ],
-  "license": "WTFPL",
-  "jest": {
-    "testMatch": [
-      "<rootDir>/?(src/)?(**/)__tests__/?(**/)*.{js,jsx,mjs}"
-    ],
-    "transform": {
-      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
-    ]
-  },
+  "license": "MIT",
   "eslintConfig": {
-    "extends": [
-      "plugin:react/recommended"
-    ],
+    "extends": "plugin:react/recommended",
     "env": {
       "es6": true,
       "node": true
@@ -46,15 +33,18 @@
       "ecmaFeatures": {
         "jsx": true
       }
-    },
-    "rules": {
-      "react/prop-types": "off",
-      "no-implied-eval": 1,
-      "no-unused-expressions": 1,
-      "no-extra-bind": 1,
-      "default-case": 1,
-      "class-methods-use-this": 1
     }
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/?(src/)?(**/)__tests__/?(**/)*.{js,jsx,mjs}"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
+    ]
   },
   "np": {
     "releaseDraft": true

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+  <meta charset="UTF-8">
+
   <head>
     <title>React Gallery Designer</title>
     <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
@@ -17,50 +19,61 @@
 
     <script>
       (function() {
-        var ids = [15, 20, 25, 30, 35, 40, 45];
 
-        var imgs = ids.map(function(id, i) {
-          return {
-            src: `../imgs/IMG_${id}-1900.jpg`,
-            placeholder: `../imgs/IMG_${id}-100.jpg`,
-            srcset: `../imgs/IMG_${id}-1900.jpg 1900w,
-                    ../imgs/IMG_${id}-1200.jpg 1200w,
-                    ../imgs/IMG_${id}-768.jpg 768w,
-                    ../imgs/IMG_${id}-480.jpg 480w,
-                    ../imgs/IMG_${id}-300.jpg 300w`,
-            sizes: `(max-width: 320px) 320w,
-                    (max-width: 480px) 480w,
-                    (max-width: 768px) 768w,
-                    (max-width: 1200px) 1200w,
-                    1900px`
-          }
+        _$("https://rss.app/feeds/wVz8jpG6ZOlhgOxg.xml").getXML(function(rss) {
+
+          _$(rss).parseXML(function(doc) {
+
+            var images = Array.from(_$().tags("item", doc), function(item, i) {
+              return {
+                caption: _$().qs("title", item).childNodes[0].nodeValue,
+                link: _$().qs("link", item).childNodes[0].nodeValue,
+                target: true
+              }
+            });
+
+            var settings = {
+              animation: "book",
+              timingfn: "cubic-bezier(0.95, 0.05, 0.25, 1)",
+              speed: 5000,
+              transitionspeed: 1,
+              playpause: true,
+              arrows: true,
+              auto: false,
+              advance: 1,
+              showcaptions: true,
+              linkslides: true,
+              thumbnails: false,
+              contain: false,
+              noImages: true,
+              slidePercentHigh: 100
+            };
+
+            return __RGD({
+              images: images,
+              settings: settings,
+              captionStyle: {
+                color: "#595956",
+                fontWeight: "bold",
+                textDecoration: "none",
+                padding: "20px"
+              },
+              imgStyle: {
+                textDecoration: "none",
+                backgroundImage: "linear-gradient(transparent, #d5d5d5)",
+                border: "1px solid grey"
+              },
+              style: {
+                width: "500px",
+                height: "400px",
+                margin: "10vh auto",
+                border: "#000 solid 2px"
+              },
+              domId: "react-gallery"
+            });
+
+          });
         });
-
-        var settings = {
-          animation: "slide",
-          timingfn: "cubic-bezier(0.95, 0.05, 0.25, 1)",
-          inview: 3,
-          speed: 2500,
-          transitionspeed: 0.75,
-          linkslides: true,
-          playpause: true,
-          arrows: true,
-          showcaptions: true,
-          contain: true,
-          thumbnails: true
-        };
-
-
-        return __RGD({
-          images: imgs,
-          settings: settings,
-          style: {
-            width: "600px",
-            maxWidth: "95%",
-            margin: "0 auto"
-          },
-          domId: "react-gallery"
-        })
       })()
     </script>
   </body>

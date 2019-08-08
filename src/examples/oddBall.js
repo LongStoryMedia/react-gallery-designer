@@ -17,34 +17,44 @@ export const images = ids.map((id, i) => ({
   target: true,
   index: i,
   caption: `super cool caption ${i}`,
-  style: {borderRight: "red solid 10px", borderLeft: "blue solid 10px"},
+  style: {borderRight: "red solid 10px"},
   repeat: true,
   position: "bottom right",
+  children: "... some more children here ...",
   alt: "SOOPERKEWLIMGOMG",
   timeout: 500
 }));
 
 export const settings = {
+  lightbox: false,
+  inview: 5,
   auto: true,
   noImages: false,
+  direction: "right",
+  orientation: "horizontal",
   animation: "carousel",
-  inview: 5,
   speed: 3500,
   timingfn: "linear",
   transitionspeed: 0.333333,
-  contain: true,
-  arrows: true,
   playpause: true,
+  pauseonhover: true,
+  arrows: true,
+  advance: 2,
+  startposition: "right",
+  showcaptions: true,
+  linkslides: true,
+  thumbnails: true,
+  contain: true,
   playIcon: "PLAY",
   pauseIcon: "PAUSE",
   nextIcon: "NEXT",
   prevIcon: "PREV",
+  tag: "figure"
 };
 
 export const galleryProps = {
   style: {
-    height: "100vh",
-    backgroundImage: "linear-gradient(blue, red)"
+    height: "100vh"
   },
   imgStyle: {
     margin: 0
