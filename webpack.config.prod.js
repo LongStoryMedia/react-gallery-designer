@@ -6,7 +6,7 @@ module.exports = {
   mode: process.env.NODE_ENV,
   entry: "./src/index.js",
   plugins: [
-    new CleanWebpackPlugin([`build/react-gallery-designer.js`])
+    new CleanWebpackPlugin([`build/react-gallery-designer.min.js`])
   ],
   output: {
     path: path.resolve(__dirname, "build"),

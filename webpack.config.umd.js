@@ -6,7 +6,7 @@ module.exports = {
   mode: process.env.NODE_ENV,
   entry: "./src/umd.js",
   plugins: [
-    new CleanWebpackPlugin([`umd/react-image-designer.js`])
+    new CleanWebpackPlugin([`umd/react-gallery-designer.min.js`])
   ],
   output: {
     libraryExport: '__RGD',

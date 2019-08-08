@@ -1,7 +1,8 @@
 {
   "name": "react-gallery-designer",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "description": "react component for creating image galleries, carousels, lightbox-like layouts and more",
+  "repository": "https://github.com/LongStoryMedia/react-gallery-designer",
   "author": "Scott Long <longstoryscott@gmail.com>",
   "keywords": [
     "react",
@@ -54,7 +55,7 @@
     "test-watch": "node test.js --watchAll",
     "test": "node test.js",
     "build": "node build.js prod",
-    "prepublish": "npm run test --scripts-prepend-node-path && npm run build --scripts-prepend-node-path && npm run umd --scripts-prepend-node-path",
+    "prepublishOnly": "npm run test --scripts-prepend-node-path && npm run build --scripts-prepend-node-path && npm run umd --scripts-prepend-node-path",
     "umd": "node build.js umd"
   },
   "devDependencies": {
