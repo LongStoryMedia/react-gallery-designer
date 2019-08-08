@@ -24,15 +24,34 @@ The UMD build is also available on [unpkg](https://unpkg.com):
 
 If you use the UMD build you can find the library on `window.__RGD`.
 
+### Demos
+
+##### [lightbox](https://longstorymedia.github.io/react-gallery-designer/examples/lightbox.html)
+##### [rotator](https://longstorymedia.github.io/react-gallery-designer/examples/rotator.html)
+##### [rss](https://longstorymedia.github.io/react-gallery-designer/examples/rss.html)
+##### [carousel](https://longstorymedia.github.io/react-gallery-designer/examples/carousel.html)
+
 ## Props
 
 ### images (required)
 <u>type</u>: array\
 <u>description</u>: Array of objects representing the props for each image. This library uses [react-image-designer](https://github.com/LongStoryMedia/react-image-designer) for each image (and thumbnail) in the gallery. In addition to the [props](https://github.com/LongStoryMedia/react-image-designer#props) from `react-image-designer`, you may also define the following:
-- link
-- target
-- index
-- caption
+#### - link
+<u>default</u>: ""\
+<u>type</u>: string\
+<u>description</u>: Url to link image.
+#### - target
+<u>default</u>: false\
+<u>type</u>: boolean\
+<u>description</u>: add `target="_blank" rel="noopener noreferrer"` to the `a` tag.
+#### - index
+<u>default</u>: 0\
+<u>type</u>: number\
+<u>description</u>: Index of image in array. Array will be sorted to user defined order if index is provided.
+#### - caption
+<u>default</u>: ""\
+<u>type</u>: string\
+<u>description</u>: Caption for image.
 
 additionally the following [props](https://github.com/LongStoryMedia/react-image-designer#props) are not modifiable on the image object because they are either taken care of at the global level, or are handled by `react-gallery-designer` internally (and changing that would break it):
 - id
@@ -355,12 +374,6 @@ const SuperCoolGallery = props => (
 
 </script>
 ```
-### Demos
-
-##### lightbox: https://longstorymedia.github.io/react-gallery-designer/examples/lightbox.html
-##### rotator: https://longstorymedia.github.io/react-gallery-designer/examples/rotator.html
-##### rss: https://longstorymedia.github.io/react-gallery-designer/examples/rss.html
-##### carousel: https://longstorymedia.github.io/react-gallery-designer/examples/carousel.html
 
 ### Try Things Live
 To test the options, git clone this repo, put some images in the 'imgs' directory, or grab them from whatever remote resource, and set-up your configuration. Then run ``yarn start ./relative/path/from/src/to/configuration`` or ``npm run start ./relative/path/from/src/to/configuration``.

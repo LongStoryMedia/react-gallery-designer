@@ -20,7 +20,7 @@ global.__RGD = ({
   domId,
   ...props
 }) => {
-  return ReactDOM.render(
+  ReactDOM.render(
     <GalleryDesigner
       style={style}
       thumbnailStyle={thumbnailStyle}

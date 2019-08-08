@@ -155,7 +155,7 @@ export default class Gallery extends PureComponent {
     const imgs = images.map((img, i) => ({
       ...img,
       isLoaded: false,
-      index: i,
+      index: img.index || i,
       thumbId: this.setThumbId(i)
     }));
     if (!needClones) {
