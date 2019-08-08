@@ -34,6 +34,9 @@
       "ecmaFeatures": {
         "jsx": true
       }
+    },
+    "rules": {
+      "react/prop-types": 0
     }
   },
   "jest": {
@@ -55,7 +58,7 @@
     "test-watch": "node test.js --watchAll",
     "test": "node test.js",
     "build": "node build.js prod",
-    "prepublishOnly": "npm run test --scripts-prepend-node-path && npm run build --scripts-prepend-node-path && npm run umd --scripts-prepend-node-path",
+    "prepare": "npm run test --scripts-prepend-node-path && npm run build --scripts-prepend-node-path && npm run umd --scripts-prepend-node-path",
     "umd": "node build.js umd"
   },
   "devDependencies": {
