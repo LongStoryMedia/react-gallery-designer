@@ -618,7 +618,7 @@ export default class Gallery extends PureComponent {
       noImage: noImages,
       srcset: img.srcset,
       sizes: img.sizes,
-      placeholder: img.placeholder,
+      placeholder: _$(img).OBJ(["placeholder"], img.src),
       id: `img-${i}`,
       style: {
         backgroundColor:
