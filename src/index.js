@@ -155,7 +155,7 @@ export default class Gallery extends PureComponent {
     const imgs = images.map((img, i) => ({
       ...img,
       isLoaded: false,
-      index: img.index || i,
+      index: i,
       thumbId: this.setThumbId(i)
     }));
     if (!needClones) {
@@ -288,13 +288,12 @@ export default class Gallery extends PureComponent {
           visibility:
             view || ("book" === animation && ro <= 2) ? "visible" : "hidden",
           opacity: view || ("book" === animation && ro <= 3) ? 1 : 0,
-          isLoaded:
-            view || (prevImgs && prevImgs[img.index].isLoaded) ? true : false,
+          isLoaded: view || _$(prevImgs).OBJ([img.index, "isLoaded"], false),
           zIndex:
             ("carousel" === animation || "book" === animation) && ro === 1
               ? 7
               : ("carousel" === animation || "book" === animation) && ro === 2
-              ? 8
+              ? 6
               : "carousel" === animation && ro >= midInview + extra
               ? -1
               : ""
@@ -308,7 +307,7 @@ export default class Gallery extends PureComponent {
               "flip" === animation
                 ? "0, 0"
                 : "horizontal" === orientation
-                ? `${isLMid ? translateL : -(translateL / midInview)}%, 0`
+                ? `${translateL}%, 0`
                 : `0, ${translateU}`,
             scale:
               "carousel" === animation
@@ -322,23 +321,22 @@ export default class Gallery extends PureComponent {
                 : "0"
           }),
           transformStyle: "preserve-3d",
-          backfaceVisibility: ("carousel" === animation || "book" === animation) && lo === 1 ? "visible" : "hidden",
+          backfaceVisibility: "hidden",
           transformOrigin:
             "book" === animation
               ? "left"
               : "carousel" === animation
-              ? `${(1 / (midInview * 2)) * (midInview + lo) * 100}%`
+              ? `${(1 / (midInview * 2)) * (midInview - lo) * 100}%`
               : "center",
           visibility:
             isLMid || ("book" === animation && lo <= 1) ? "visible" : "hidden",
           opacity: isLMid || ("book" === animation && lo <= 3) ? 1 : 0,
-          isLoaded:
-            isLMid || (prevImgs && prevImgs[img.index].isLoaded) ? true : false,
+          isLoaded: isLMid || _$(prevImgs).OBJ([img.index, "isLoaded"], false),
           zIndex:
             ("carousel" === animation || "book" === animation) && lo === 1
               ? 8
               : "carousel" === animation && lo >= midInview
-              ? 1
+              ? -1
               : ""
         };
       }
@@ -346,7 +344,9 @@ export default class Gallery extends PureComponent {
         ...img,
         transform: transform({
           translate:
-            "horizontal" === orientation
+            "carousel" === animation
+              ? "0, 0"
+              : "horizontal" === orientation
               ? `${100 * sideLength}%, 0`
               : `0, ${_height * sideLength}${unit}`,
           scale: "carousel" === animation ? ".5" : "1",
@@ -558,32 +558,27 @@ export default class Gallery extends PureComponent {
         ? `opacity ${transitionspeed}s ${timingfn}, visibility ${transitionspeed}s ${timingfn}`
         : `transform ${transitionspeed}s ${timingfn}, visibility ${transitionspeed}s ${timingfn}, transform-origin ${transitionspeed}s ${timingfn}`;
 
-    const thumbnailHeight = heightAdj(
-      thumbnailStyle,
-      `${
-        lightbox
-          ? _$(lbSmallPercentHigh).vh()
-          : _$(thumbPercentHigh).vh(_$(ref).OBJ(["current"]))
-      }px`
-    );
+    const tHeight = lightbox
+      ? _$(lbSmallPercentHigh).vh()
+      : _$(thumbPercentHigh).vh(_$(ref).OBJ(["current"]));
 
-    const thumbAdj = parseInt(thumbnailHeight, 10);
+    const thumbnailHeight = _$(thumbnailStyle).OBJ(["height"], `${tHeight}px`);
 
-    const defaultHeight = `${_$(50).vh() - thumbAdj}px`;
+    const defaultHeight = `calc(${_$(50).vh()}px - ${thumbnailHeight})`;
 
     const sliderHeight = `calc(${_$(style).OBJ(
       ["height"],
       defaultHeight
     )} - ${parseInt(thumbnailHeight, 10) * 1.1}px)`;
 
-    const imgHeightHerizontal = `${_$(imagePercentHigh).vh(
+    const imgHeightHorizontal = `${_$(imagePercentHigh).vh(
       _$(ref).OBJ(["current"])
     )}px`;
 
     const imgHeightVertical = `calc(${sliderHeight} / ${visibleImgs})`;
 
     const slideHeight =
-      orientation === "vertical" ? imgHeightVertical : imgHeightHerizontal;
+      orientation === "vertical" ? imgHeightVertical : imgHeightHorizontal;
 
     const BoxTag = linkslides && !lightbox ? "a" : "span";
 
@@ -607,8 +602,6 @@ export default class Gallery extends PureComponent {
             position: "fixed",
             height: "100vh",
             width: "100vw",
-            maxHeight: "100vh",
-            maxWidth: "100vw",
             top: 0,
             bottom: 0,
             left: 0,
@@ -684,7 +677,6 @@ export default class Gallery extends PureComponent {
                     : "react-gallery-slide"
                 }
                 style={{
-                  zIndex: lightbox && zoomedIn && img.index === slide ? 20 : "",
                   ...animationStyle(img),
                   width:
                     orientation === "horizontal" && !lightbox
@@ -694,6 +686,7 @@ export default class Gallery extends PureComponent {
                   ...prefix("transformStyle", img.transformStyle),
                   position: "absolute",
                   display: lightbox && !zoomedIn ? "none" : "block",
+                  zIndex: lightbox && zoomedIn && img.index === slide ? 20 : "",
                   textAlign: "center",
                   cursor: lightbox
                     ? zoomedIn
@@ -789,12 +782,12 @@ export default class Gallery extends PureComponent {
             className={thumbnailClass}
             style={{
               ...thumbnailStyle,
-              width: "100%",
-              ...style,
               display: zoomedIn ? "none" : "flex",
               flexFlow: `row ${lightbox ? "wrap" : ""}`,
               position: "relative",
+              bottom: 0,
               margin: "0 auto",
+              width: "100%",
               justifyContent: "space-around"
             }}
           >

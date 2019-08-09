@@ -20,7 +20,6 @@ const rgd = ({ images, settings, galleryProps, ...props }) =>
 import(TEST_SCRIPT)
   .then(({ images, settings, galleryProps, ...props }) => {
     return (
-      images &&
       rgd({ images, settings, galleryProps, ...props })
     );
   })
