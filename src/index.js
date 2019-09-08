@@ -3,9 +3,6 @@ react-gallery-designer
 (c) Long Story Media
 @license MIT
 */
-import "core-js/es6/map";
-import "core-js/es6/set";
-import "raf-polyfill";
 
 import React, { PureComponent, createRef } from "react";
 import ImageDesigner from "react-image-designer";
@@ -24,6 +21,12 @@ import {
   prefix,
   tryDecode
 } from "./utils";
+
+if (typeof window !== "undefined") {
+  require("core-js/es6/map");
+  require("core-js/es6/set");
+  require("raf-polyfill");
+}
 
 export default class Gallery extends PureComponent {
   state = {
