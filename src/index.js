@@ -8,9 +8,6 @@ import React, { PureComponent, createRef } from "react";
 import ImageDesigner from "react-image-designer";
 import _$ from "long-story-library";
 import {
-  OBJ,
-  iterateUp,
-  iterateDown,
   isRight,
   isLeft,
   rightOffset,
@@ -138,11 +135,7 @@ export default class Gallery extends PureComponent {
       advance,
       animation,
       startposition,
-      lightbox,
-      lbSmallPercentHigh,
-      thumbPercentHigh,
-      imagePercentHigh
-    } = this.settings;
+      lightbox    } = this.settings;
     const adv =
       "flip" === animation || "fade" === animation
         ? 1
@@ -183,7 +176,6 @@ export default class Gallery extends PureComponent {
       inview,
       animation,
       orientation,
-      tag,
       style,
       lightbox,
       imagePercentHigh
