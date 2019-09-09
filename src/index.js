@@ -17,7 +17,7 @@ import {
   transform,
   prefix,
   tryDecode
-} from "./U";
+} from "./utils";
 
 if (typeof window !== "undefined") {
   require("core-js/es6/map");
