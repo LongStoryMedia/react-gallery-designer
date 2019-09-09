@@ -17,7 +17,7 @@ import {
   transform,
   prefix,
   tryDecode
-} from "./utils";
+} from "./U";
 
 if (typeof window !== "undefined") {
   require("core-js/es6/map");
@@ -135,7 +135,8 @@ export default class Gallery extends PureComponent {
       advance,
       animation,
       startposition,
-      lightbox    } = this.settings;
+      lightbox
+    } = this.settings;
     const adv =
       "flip" === animation || "fade" === animation
         ? 1
@@ -147,7 +148,8 @@ export default class Gallery extends PureComponent {
     const extra = ((visibleImgs % 2) + 1) % 2;
     const leftIdx = Math.floor(visibleImgs / 2) - extra;
     const rightIdx = images.length - Math.floor(visibleImgs / 2);
-    const needClones = !!(images.length < visibleImgs + onDeck * 2);
+    const needClones =
+      images.length < visibleImgs + onDeck * 2 && images.length > 0;
     const imgs = images.map((img, i) => ({
       ...img,
       isLoaded: false,
@@ -208,14 +210,15 @@ export default class Gallery extends PureComponent {
       const translateR = 100 * (midInview + ro) - positionAdjust;
       const translateL = 100 * (midInview - lo) - positionAdjust;
       const _ref = _$(ref).OBJ(["current"]);
+      const _height = _$(imagePercentHigh).vh(_ref);
       const translateD = heightAdj(
         style,
-        _$(imagePercentHigh).vh(_ref),
+        _height,
         (h, u) => `${(h / inview) * (midInview + ro)}${u}`
       );
       const translateU = heightAdj(
         style,
-        _$(imagePercentHigh).vh(_ref),
+        _height,
         (h, u) => `${(h / inview) * (midInview - lo)}${u}`
       );
       if (lightbox) {
@@ -339,11 +342,7 @@ export default class Gallery extends PureComponent {
         ...img,
         transform: transform({
           translate:
-            "carousel" === animation
-              ? "0, 0"
-              : "horizontal" === orientation
-              ? `${100 * sideLength}%, 0`
-              : `0, ${_height * sideLength}${unit}`,
+            "carousel" === animation ? "0, 0" : `${100 * sideLength}%, 0`,
           scale: "carousel" === animation ? ".5" : "1",
           rotateY: "0"
         }),
