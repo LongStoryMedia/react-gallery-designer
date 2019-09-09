@@ -148,8 +148,7 @@ export default class Gallery extends PureComponent {
     const extra = ((visibleImgs % 2) + 1) % 2;
     const leftIdx = Math.floor(visibleImgs / 2) - extra;
     const rightIdx = images.length - Math.floor(visibleImgs / 2);
-    const needClones =
-      images.length < visibleImgs + onDeck * 2 && images.length > 0;
+    const needClones = !!(images.length < visibleImgs + onDeck * 2);
     const imgs = images.map((img, i) => ({
       ...img,
       isLoaded: false,
