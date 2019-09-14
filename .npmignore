@@ -58,3 +58,11 @@ typings/
 
 # dotenv environment variables file
 .env
+
+build.js
+test.js
+start.js
+examples**
+imgs**
+src**
+**config**
