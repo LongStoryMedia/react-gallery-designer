@@ -130,7 +130,6 @@ export default class Gallery extends PureComponent {
   };
 
   setSlides = images => {
-    console.log(images)
     const {
       inview,
       advance,
