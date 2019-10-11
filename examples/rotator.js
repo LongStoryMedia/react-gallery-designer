@@ -24,29 +24,26 @@ export const images = ids.map(function(id, i) {
 export const settings = {
   animation: "slide",
   timingfn: "cubic-bezier(0.95, 0.05, 0.25, 1)",
-  inview: 3,
+  inview: 1,
   speed: 2500,
   transitionspeed: 0.75,
   linkslides: true,
   playpause: true,
-  arrows: true,
+  arrows: false,
   showcaptions: true,
-  contain: true,
-  thumbnails: true
+  contain: false,
+  thumbnails: false
 };
 
 export const galleryProps = {
   style: {
-    height: "30vh"
-  },
-  imgStyle: {
-    width: "90%",
-    margin: "0 auto"
+    height: "60vh"
   },
   captionStyle: {
     color: "#fff",
     backgroundColor: "rgba(25,25,25,0.25)",
-    height: "25px",
+    height: "50px",
+    fontSize: "30px",
     bottom: 0,
     left: 0,
     right: 0,

@@ -28,7 +28,7 @@ export const settings = {
   auto: true,
   noImages: false,
   animation: "carousel",
-  inview: 5,
+  inview: 3,
   speed: 3500,
   timingfn: "linear",
   transitionspeed: 0.333333,

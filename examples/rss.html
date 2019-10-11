@@ -19,63 +19,46 @@
     <div id="react-gallery"></div>
 
     <script>
-      (function() {
-
-        _$("https://rss.app/feeds/wVz8jpG6ZOlhgOxg.xml").getXML(function(rss) {
-
-          _$(rss).parseXML(function(doc) {
-
-            var images = Array.from(_$().tags("item", doc), function(item, i) {
-              return {
-                caption: _$().qs("title", item).childNodes[0].nodeValue,
-                link: _$().qs("link", item).childNodes[0].nodeValue,
-                target: true
-              }
-            });
-
-            var settings = {
-              inview: 3,
-              auto: true,
-              playpause: false,
-              pauseonhover: false,
-              animation: "slide",
-              orientation: "vertical",
-              speed: 5000,
-              transitionspeed: 1,
-              arrows: false,
-              advance: 1,
-              showcaptions: true,
-              linkslides: true,
-              thumbnails: false,
-              contain: false,
-              noImages: true,
-              slidePercentHigh: 100
-            };
-
-            return __RGD({
-              images: images,
-              settings: settings,
-              captionStyle: {
-                color: "#595956",
-                fontWeight: "bold",
-                padding: "20px"
-              },
-              imgStyle: {
-                textDecoration: "none",
-                backgroundImage: "linear-gradient(transparent, #d5d5d5)"
-              },
-              style: {
-                width: "300px",
-                height: "400px",
-                margin: "10vh auto",
-                border: "#000 solid 2px"
-              },
-              domId: "react-gallery"
-            });
-
-          });
+    (function(_$) {
+  _$.getXML(
+    "https://rss.app/feeds/wVz8jpG6ZOlhgOxg.xml",
+    function(rss) {
+      _$.parseXML(rss, function(doc) {
+        const images = Array.from(_$.tags("item", doc), function(item, i) {
+          return {
+            caption: _$.qs("title", item).childNodes[0].nodeValue,
+            link: _$.qs("link", item).childNodes[0].nodeValue,
+            target: true
+          };
         });
-      })()
+        const settings = {
+          inview: 2,
+          auto: true,
+          direction: "left",
+          animation: "slide",
+          orientation: "vertical",
+          speed: 5000,
+          transitionspeed: 1,
+          advance: 1,
+          showcaptions: true,
+          linkslides: true,
+          noImages: true
+        };
+        if (images.length > 4) {
+          return __RGD({
+            images: images,
+            settings: settings,
+            captionStyle: { color: "#595956", fontWeight: "bold", lineHeight: 2, fontSize: "1.05rem" },
+            imgStyle: { padding: "0 1rem", border: "1px solid #2d2d2d", overflow: "hidden" },
+            style: { height: "12rem" },
+            domId: "twitterFeed"
+          });
+        }
+      });
+    }
+  );
+})(new _$());
+
     </script>
   </body>
 

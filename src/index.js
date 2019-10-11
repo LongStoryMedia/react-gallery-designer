@@ -130,6 +130,7 @@ export default class Gallery extends PureComponent {
   };
 
   setSlides = images => {
+    console.log(images)
     const {
       inview,
       advance,
@@ -193,6 +194,8 @@ export default class Gallery extends PureComponent {
       const isLMid = isLeft(midInview, images, img.index, setImg);
       const isR = isRight(sideLength, images, img.index, setImg);
       const isL = isLeft(sideLength, images, img.index, setImg);
+      //Honestly - I don't even remember the math here... suffice it to say it works
+      //TODO: figure out a more elegant way to calculate all these variables.
       const positionAdjust =
         "book" === animation && lo === 1
           ? 200
@@ -202,13 +205,11 @@ export default class Gallery extends PureComponent {
           ? 200
           : "book" === animation && ro === 3
           ? 200
-          : "flip" === animation ||
-            ("carousel" === animation && ro === midInview + 1 + extra) ||
-            ("carousel" === animation && lo === midInview + 1)
+          : "flip" === animation
           ? 100
           : 0;
       const translateR = 100 * (midInview + ro) - positionAdjust;
-      const translateL = 100 * (midInview - lo) - positionAdjust;
+      const translateL = 100 * (midInview - lo) + positionAdjust;
       const _ref = _$(ref).OBJ(["current"]);
       const _height = _$(imagePercentHigh).vh(_ref);
       const translateD = heightAdj(
@@ -276,12 +277,12 @@ export default class Gallery extends PureComponent {
           transformStyle: "preserve-3d",
           backfaceVisibility: "hidden",
           transformOrigin:
-            "carousel" === animation
-              ? `${(1 / (midInview * 2)) * (midInview - ro + extra) * 100}%`
-              : "book" === animation
+            "book" === animation
               ? ro === 1
                 ? "left"
                 : "right"
+              : "carousel" === animation
+              ? `${-(Math.log10(ro - extra) * 100)}%`
               : "center",
           visibility:
             view || ("book" === animation && ro <= 2) ? "visible" : "hidden",
@@ -324,7 +325,7 @@ export default class Gallery extends PureComponent {
             "book" === animation
               ? "left"
               : "carousel" === animation
-              ? `${(1 / (midInview * 2)) * (midInview - lo) * 100}%`
+              ? `${100 + Math.log10(lo) * 100}%`
               : "center",
           visibility:
             isLMid || ("book" === animation && lo <= 1) ? "visible" : "hidden",
@@ -458,7 +459,7 @@ export default class Gallery extends PureComponent {
 
   onThumbnailClick = e => {
     const { slide, images } = this.state;
-    const { id } = e.target;
+    const { id } = e.currentTarget;
     const ids = id.split("thumbNailImg_").pop();
     const slideOpts = ids.split(",");
     const idxs = slideOpts.map(i => Number(i));
@@ -776,7 +777,7 @@ export default class Gallery extends PureComponent {
             className={thumbnailClass}
             style={{
               ...thumbnailStyle,
-              display: zoomedIn ? "none" : "flex",
+              display: "flex",
               flexFlow: `row ${lightbox ? "wrap" : ""}`,
               position: "relative",
               bottom: 0,

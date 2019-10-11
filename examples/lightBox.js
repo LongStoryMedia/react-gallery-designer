@@ -41,7 +41,4 @@ export const images = ids.map(id => ({
     "(max-width: 320px) 320w, (max-width: 480px) 480w, (max-width: 768px) 768w, (max-width: 1200px) 1200w, 1900px"
 }));
 
-export const settings = {
-  lightbox: true,
-  inview: 4
-};
+export const settings = { lightbox: true };

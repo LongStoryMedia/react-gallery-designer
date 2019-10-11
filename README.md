@@ -28,6 +28,7 @@ If you use the UMD build you can find the library on `window.__RGD`.
 
 ##### [lightbox](https://longstorymedia.github.io/react-gallery-designer/examples/lightbox.html)
 ##### [rotator](https://longstorymedia.github.io/react-gallery-designer/examples/rotator.html)
+##### [fade](https://longstorymedia.github.io/react-gallery-designer/examples/fade.html)
 ##### [rss](https://longstorymedia.github.io/react-gallery-designer/examples/rss.html)
 ##### [carousel](https://longstorymedia.github.io/react-gallery-designer/examples/carousel.html)
 
