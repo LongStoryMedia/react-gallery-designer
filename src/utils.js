@@ -1,4 +1,9 @@
-import _$ from "long-story-library";
+export const isObject = (nestedObj, pathArr, def) => {
+  let reducer = pathArr.reduce((obj, key) => {
+    return obj && "undefined" !== typeof obj[key] ? obj[key] : void 0;
+  }, nestedObj);
+  return typeof reducer !== "undefined" ? reducer : def;
+};
 
 export const iterateUp = (len, arr, currentIdx) =>
   currentIdx + len >= arr.length
@@ -46,7 +51,7 @@ export const vi = (animation, inview) =>
     : parseInt(inview, 10);
 
 export const heightAdj = (style, def, cb) => {
-  const _string = _$(style).OBJ(["height"], def);
+  const _string = isObject(style, ["height"], def);
   const _height = parseInt(_string, 10);
   const unit = typeof _string === "string" ? _string.match(/\D.+?$/)[0] : "px";
   return cb ? cb(_height, unit) : `${_height}${unit}`;
@@ -73,3 +78,5 @@ export const tryDecode = string => {
     return string;
   }
 };
+
+export const vh = (arg, ref) => ((((ref && ref.clientHeight) || window.innerHeight) / 100) * arg);

@@ -6,7 +6,6 @@ react-gallery-designer
 
 import React, { PureComponent, createRef } from "react";
 import ImageDesigner from "react-image-designer";
-import _$ from "long-story-library";
 import {
   isRight,
   isLeft,
@@ -16,7 +15,9 @@ import {
   heightAdj,
   transform,
   prefix,
-  tryDecode
+  tryDecode,
+  isObject,
+  vh
 } from "./utils";
 
 if (typeof window !== "undefined") {
@@ -39,42 +40,42 @@ export default class Gallery extends PureComponent {
   };
 
   settings = {
-    inview: _$(this.props).OBJ(["settings", "inview"], 1),
-    auto: _$(this.props).OBJ(["settings", "auto"], true),
-    noImages: _$(this.props).OBJ(["settings", "noImages"]),
-    playpause: _$(this.props).OBJ(["settings", "playpause"]),
-    pauseonhover: _$(this.props).OBJ(["settings", "pauseonhover"]),
-    direction: _$(this.props).OBJ(["settings", "direction"], "left"),
-    orientation: _$(this.props).OBJ(["settings", "orientation"], "horizontal"),
-    animation: _$(this.props).OBJ(["settings", "animation"], "slide"),
-    speed: _$(this.props).OBJ(["settings", "speed"], 2000),
-    timingfn: _$(this.props).OBJ(["settings", "timingfn"], "ease-in-out"),
-    transitionspeed: _$(this.props).OBJ(["settings", "transitionspeed"], 0.25),
-    arrows: _$(this.props).OBJ(["settings", "arrows"]),
-    advance: _$(this.props).OBJ(["settings", "advance"], 1),
-    startposition: _$(this.props).OBJ(["settings", "startposition"], "center"),
-    showcaptions: _$(this.props).OBJ(["settings", "showcaptions"]),
-    linkslides: _$(this.props).OBJ(["settings", "linkslides"]),
-    thumbnails: _$(this.props).OBJ(["settings", "thumbnails"]),
-    lightbox: _$(this.props).OBJ(["settings", "lightbox"]),
-    contain: _$(this.props).OBJ(["settings", "contain"]),
-    playIcon: _$(this.props).OBJ(["settings", "playIcon"], "&#9654;"),
-    pauseIcon: _$(this.props).OBJ(["settings", "pauseIcon"], "&#9208;"),
-    nextIcon: _$(this.props).OBJ(["settings", "nextIcon"], "&#8250;"),
-    prevIcon: _$(this.props).OBJ(["settings", "prevIcon"], "&#8249;"),
-    imagePercentHigh: _$(this.props).OBJ(
+    inview: isObject(this.props, ["settings", "inview"], 1),
+    auto: isObject(this.props, ["settings", "auto"], true),
+    noImages: isObject(this.props, ["settings", "noImages"]),
+    playpause: isObject(this.props, ["settings", "playpause"]),
+    pauseonhover: isObject(this.props, ["settings", "pauseonhover"]),
+    direction: isObject(this.props, ["settings", "direction"], "left"),
+    orientation: isObject(this.props, ["settings", "orientation"], "horizontal"),
+    animation: isObject(this.props, ["settings", "animation"], "slide"),
+    speed: isObject(this.props, ["settings", "speed"], 2000),
+    timingfn: isObject(this.props, ["settings", "timingfn"], "ease-in-out"),
+    transitionspeed: isObject(this.props, ["settings", "transitionspeed"], 0.25),
+    arrows: isObject(this.props, ["settings", "arrows"]),
+    advance: isObject(this.props, ["settings", "advance"], 1),
+    startposition: isObject(this.props, ["settings", "startposition"], "center"),
+    showcaptions: isObject(this.props, ["settings", "showcaptions"]),
+    linkslides: isObject(this.props, ["settings", "linkslides"]),
+    thumbnails: isObject(this.props, ["settings", "thumbnails"]),
+    lightbox: isObject(this.props, ["settings", "lightbox"]),
+    contain: isObject(this.props, ["settings", "contain"]),
+    playIcon: isObject(this.props, ["settings", "playIcon"], "&#9654;"),
+    pauseIcon: isObject(this.props, ["settings", "pauseIcon"], "&#9208;"),
+    nextIcon: isObject(this.props, ["settings", "nextIcon"], "&#8250;"),
+    prevIcon: isObject(this.props, ["settings", "prevIcon"], "&#8249;"),
+    imagePercentHigh: isObject(this.props, 
       ["settings", "imagePercentHigh"],
-      _$(this.props).OBJ(["settings", "thumbnails"]) ? 80 : 100
+      isObject(this.props, ["settings", "thumbnails"]) ? 80 : 100
     ),
-    thumbPercentHigh: _$(this.props).OBJ(
+    thumbPercentHigh: isObject(this.props, 
       ["settings", "thumbPercentHigh"],
-      _$(this.props).OBJ(["settings", "thumbnails"]) ? 15 : 0
+      isObject(this.props, ["settings", "thumbnails"]) ? 15 : 0
     ),
-    lbSmallPercentHigh: _$(this.props).OBJ(
+    lbSmallPercentHigh: isObject(this.props, 
       ["settings", "lbSmallPercentHigh"],
       30
     ),
-    tag: _$(this.props).OBJ(["settings", "tag"], "div")
+    tag: isObject(this.props, ["settings", "tag"], "div")
   };
 
   componentDidMount() {
@@ -211,8 +212,8 @@ export default class Gallery extends PureComponent {
           : 0;
       const translateR = 100 * (midInview + ro) - positionAdjust;
       const translateL = 100 * (midInview - lo) + positionAdjust;
-      const _ref = _$(ref).OBJ(["current"]);
-      const _height = _$(imagePercentHigh).vh(_ref);
+      const _ref = isObject(ref, ["current"]);
+      const _height = vh(imagePercentHigh, _ref);
       const translateD = heightAdj(
         style,
         _height,
@@ -288,7 +289,7 @@ export default class Gallery extends PureComponent {
           visibility:
             view || ("book" === animation && ro <= 2) ? "visible" : "hidden",
           opacity: view || ("book" === animation && ro <= 3) ? 1 : 0,
-          isLoaded: view || _$(prevImgs).OBJ([img.index, "isLoaded"], false),
+          isLoaded: view || isObject(prevImgs, [img.index, "isLoaded"], false),
           zIndex:
             ("carousel" === animation || "book" === animation) && ro === 1
               ? 7
@@ -331,7 +332,7 @@ export default class Gallery extends PureComponent {
           visibility:
             isLMid || ("book" === animation && lo <= 1) ? "visible" : "hidden",
           opacity: isLMid || ("book" === animation && lo <= 3) ? 1 : 0,
-          isLoaded: isLMid || _$(prevImgs).OBJ([img.index, "isLoaded"], false),
+          isLoaded: isLMid || isObject(prevImgs, [img.index, "isLoaded"], false),
           zIndex:
             ("carousel" === animation || "book" === animation) && lo === 1
               ? 8
@@ -555,20 +556,20 @@ export default class Gallery extends PureComponent {
         : `transform ${transitionspeed}s ${timingfn}, visibility ${transitionspeed}s ${timingfn}, transform-origin ${transitionspeed}s ${timingfn}`;
 
     const tHeight = lightbox
-      ? _$(lbSmallPercentHigh).vh()
-      : _$(thumbPercentHigh).vh(_$(ref).OBJ(["current"]));
+      ? vh(lbSmallPercentHigh)
+      : vh(thumbPercentHigh, isObject(ref, ["current"]));
 
-    const thumbnailHeight = _$(thumbnailStyle).OBJ(["height"], `${tHeight}px`);
+    const thumbnailHeight = isObject(thumbnailStyle, ["height"], `${tHeight}px`);
 
-    const defaultHeight = `calc(${_$(50).vh()}px - ${thumbnailHeight})`;
+    const defaultHeight = `calc(${vh(50)}px - ${thumbnailHeight})`;
 
-    const sliderHeight = `calc(${_$(style).OBJ(
+    const sliderHeight = `calc(${isObject(style, 
       ["height"],
       defaultHeight
     )} - ${parseInt(thumbnailHeight, 10) * 1.1}px)`;
 
-    const imgHeightHorizontal = `${_$(imagePercentHigh).vh(
-      _$(ref).OBJ(["current"])
+    const imgHeightHorizontal = `${vh(imagePercentHigh, 
+      isObject(ref, ["current"])
     )}px`;
 
     const imgHeightVertical = `calc(${sliderHeight} / ${visibleImgs})`;
@@ -614,13 +615,13 @@ export default class Gallery extends PureComponent {
       noImage: noImages,
       srcset: img.srcset,
       sizes: img.sizes,
-      placeholder: _$(img).OBJ(["placeholder"], img.src),
+      placeholder: isObject(img, ["placeholder"], img.src),
       id: `img-${i}`,
       style: {
         backgroundColor:
           "book" === animation || noImages
-            ? _$(imgStyle).OBJ(["backgroundColor"], "#fff")
-            : _$(imgStyle).OBJ(["backgroundColor"]),
+            ? isObject(imgStyle, ["backgroundColor"], "#fff")
+            : isObject(imgStyle, ["backgroundColor"]),
         margin: lightbox ? "5vh auto" : "",
         ...imgStyle,
         ...img.style,
@@ -652,8 +653,8 @@ export default class Gallery extends PureComponent {
             ...prefix("transition", transition),
             display: "flex",
             overflow: lightbox ? "auto" : "hidden",
-            position: _$(style).OBJ(["position"], "relative"),
-            width: _$(style).OBJ(["width"], "100%"),
+            position: isObject(style, ["position"], "relative"),
+            width: isObject(style, ["width"], "100%"),
             ...style,
             height: !lightbox ? sliderHeight : "",
             ...zoomedInStyle()

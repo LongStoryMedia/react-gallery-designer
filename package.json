@@ -81,7 +81,6 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.8.0",
     "jsdom": "^15.1.1",
-    "long-story-library": "^0.0.15",
     "raf-polyfill": "^1.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
