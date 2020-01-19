@@ -1,6 +1,6 @@
 {
   "name": "react-gallery-designer",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "main": "build/react-gallery-designer.js",
   "description": "react component for creating image galleries, carousels, lightbox-like layouts and more",
   "repository": "https://github.com/LongStoryMedia/react-gallery-designer",
@@ -51,16 +51,14 @@
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
     ]
   },
-  "np": {
-    "releaseDraft": true
-  },
   "scripts": {
     "start": "node start.js",
     "test-watch": "node test.js --watchAll",
     "test": "node test.js",
     "build": "node build.js prod",
     "prepare": "npm run test --scripts-prepend-node-path && npm run build --scripts-prepend-node-path && npm run umd --scripts-prepend-node-path",
-    "umd": "node build.js umd"
+    "umd": "node build.js umd",
+    "release": "np"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

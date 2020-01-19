@@ -25,6 +25,8 @@ if (typeof window !== "undefined") {
   require("raf-polyfill");
 }
 
+export const Image = ImageDesigner;
+
 export default class Gallery extends PureComponent {
   state = {
     isPaused: true,
