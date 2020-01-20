@@ -1,7 +1,7 @@
 import React from "react";
-import Gallery from "../src";
-import { render, fireEvent, debug, act } from "@testing-library/react";
-import { create, update, unmount } from "react-test-renderer";
+import Gallery, { ImageDesigner } from "../src";
+import { render, fireEvent } from "@testing-library/react";
+import { create } from "react-test-renderer";
 
 const ids = [15, 20, 25, 30, 35, 40, 90, 135];
 
@@ -23,11 +23,8 @@ const props = {
 
 let gallery,
   createGallery,
-  updateGallery,
   instance,
-  updatedInstance,
   loaded,
-  settings,
   current,
   children,
   renderedChildren;
@@ -38,7 +35,8 @@ beforeEach(() => {
   gallery = createGallery(initSettings);
   instance = gallery.root;
   children = (gallery, i) => gallery.toJSON()[i].children;
-  renderedChildren = (gallery, i) => children(gallery, i).filter(child => !!child.children);
+  renderedChildren = (gallery, i) =>
+    children(gallery, i).filter(child => !!child.children);
   current = gallery => gallery.getInstance();
   loaded = gallery =>
     gallery.toJSON().children.filter(child => !!child.children);
@@ -48,8 +46,9 @@ afterEach(() => {
   gallery.unmount();
 });
 
-test("exports a React component", () => {
+test("exports React component as default and dependent ImageDesigner as named", () => {
   expect(typeof Gallery).toBe("function");
+  expect(typeof ImageDesigner).toBe("function");
 });
 
 test("# of images given + controls + thumbnails should equal the children (when inview is less than props.images)", () => {
@@ -81,9 +80,9 @@ test("loads additional images as it advances", () => {
 test("loads only thumbnails (and all thumbnails) on mount lightbox", () => {
   const lightbox = createGallery({ lightbox: true });
   expect(renderedChildren(lightbox, 0).length).toEqual(0);
-  expect(
-    renderedChildren(lightbox, 1).filter(c => c.children).length
-  ).toEqual(ids.length);
+  expect(renderedChildren(lightbox, 1).filter(c => c.children).length).toEqual(
+    ids.length
+  );
   lightbox.unmount();
 });
 

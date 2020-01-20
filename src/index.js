@@ -26,7 +26,7 @@ if (typeof window !== "undefined") {
   require("raf-polyfill");
 }
 
-export const Image = ImageDesigner;
+export { ImageDesigner };
 
 export default class Gallery extends PureComponent {
   state = {
@@ -46,14 +46,26 @@ export default class Gallery extends PureComponent {
     playpause: isObject(this.props, ["settings", "playpause"]),
     pauseonhover: isObject(this.props, ["settings", "pauseonhover"]),
     direction: isObject(this.props, ["settings", "direction"], "left"),
-    orientation: isObject(this.props, ["settings", "orientation"], "horizontal"),
+    orientation: isObject(
+      this.props,
+      ["settings", "orientation"],
+      "horizontal"
+    ),
     animation: isObject(this.props, ["settings", "animation"], "slide"),
     speed: isObject(this.props, ["settings", "speed"], 2000),
     timingfn: isObject(this.props, ["settings", "timingfn"], "ease-in-out"),
-    transitionspeed: isObject(this.props, ["settings", "transitionspeed"], 0.25),
+    transitionspeed: isObject(
+      this.props,
+      ["settings", "transitionspeed"],
+      0.25
+    ),
     arrows: isObject(this.props, ["settings", "arrows"]),
     advance: isObject(this.props, ["settings", "advance"], 1),
-    startposition: isObject(this.props, ["settings", "startposition"], "center"),
+    startposition: isObject(
+      this.props,
+      ["settings", "startposition"],
+      "center"
+    ),
     showcaptions: isObject(this.props, ["settings", "showcaptions"]),
     linkslides: isObject(this.props, ["settings", "linkslides"]),
     thumbnails: isObject(this.props, ["settings", "thumbnails"]),
@@ -63,15 +75,18 @@ export default class Gallery extends PureComponent {
     pauseIcon: isObject(this.props, ["settings", "pauseIcon"], "&#9208;"),
     nextIcon: isObject(this.props, ["settings", "nextIcon"], "&#8250;"),
     prevIcon: isObject(this.props, ["settings", "prevIcon"], "&#8249;"),
-    imagePercentHigh: isObject(this.props, 
+    imagePercentHigh: isObject(
+      this.props,
       ["settings", "imagePercentHigh"],
       isObject(this.props, ["settings", "thumbnails"]) ? 80 : 100
     ),
-    thumbPercentHigh: isObject(this.props, 
+    thumbPercentHigh: isObject(
+      this.props,
       ["settings", "thumbPercentHigh"],
       isObject(this.props, ["settings", "thumbnails"]) ? 15 : 0
     ),
-    lbSmallPercentHigh: isObject(this.props, 
+    lbSmallPercentHigh: isObject(
+      this.props,
       ["settings", "lbSmallPercentHigh"],
       30
     ),
@@ -332,7 +347,8 @@ export default class Gallery extends PureComponent {
           visibility:
             isLMid || ("book" === animation && lo <= 1) ? "visible" : "hidden",
           opacity: isLMid || ("book" === animation && lo <= 3) ? 1 : 0,
-          isLoaded: isLMid || isObject(prevImgs, [img.index, "isLoaded"], false),
+          isLoaded:
+            isLMid || isObject(prevImgs, [img.index, "isLoaded"], false),
           zIndex:
             ("carousel" === animation || "book" === animation) && lo === 1
               ? 8
@@ -559,16 +575,22 @@ export default class Gallery extends PureComponent {
       ? vh(lbSmallPercentHigh)
       : vh(thumbPercentHigh, isObject(ref, ["current"]));
 
-    const thumbnailHeight = isObject(thumbnailStyle, ["height"], `${tHeight}px`);
+    const thumbnailHeight = isObject(
+      thumbnailStyle,
+      ["height"],
+      `${tHeight}px`
+    );
 
     const defaultHeight = `calc(${vh(50)}px - ${thumbnailHeight})`;
 
-    const sliderHeight = `calc(${isObject(style, 
+    const sliderHeight = `calc(${isObject(
+      style,
       ["height"],
       defaultHeight
     )} - ${parseInt(thumbnailHeight, 10) * 1.1}px)`;
 
-    const imgHeightHorizontal = `${vh(imagePercentHigh, 
+    const imgHeightHorizontal = `${vh(
+      imagePercentHigh,
       isObject(ref, ["current"])
     )}px`;
 
