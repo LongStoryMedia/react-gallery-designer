@@ -1,6 +1,6 @@
 {
   "name": "react-gallery-designer",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "build/react-gallery-designer.js",
   "description": "react component for creating image galleries, carousels, lightbox-like layouts and more",
   "repository": "https://github.com/LongStoryMedia/react-gallery-designer",
