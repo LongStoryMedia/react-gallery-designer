@@ -21,43 +21,77 @@ const props = {
   className: "container"
 };
 
+global.Image = Image;
+
+const imageProps = {
+  style: {
+    width: "100%"
+  },
+  className: "image",
+  id: "Image",
+  contain: false,
+  repeat: false,
+  position: "top left",
+  alt: "alt",
+  noImage: false
+};
+
 let gallery,
   createGallery,
   instance,
   loaded,
   current,
   children,
-  renderedChildren;
+  renderedChildren,
+  imgDesigner,
+  updatedInstance,
+  imgDesignerB,
+  updatedInstanceB,
+  imgDesignerD,
+  updatedInstanceD,
+  imageInstance,
+  imageInstanceB;
 
 beforeEach(() => {
-  createGallery = settings =>
-    create(<Gallery images={images} settings={settings} {...props} />);
+  // GALLERY
+  createGallery = settings => create(<Gallery images={images} settings={settings} {...props} />);
   gallery = createGallery(initSettings);
   instance = gallery.root;
   children = (gallery, i) => gallery.toJSON()[i].children;
-  renderedChildren = (gallery, i) =>
-    children(gallery, i).filter(child => !!child.children);
+  renderedChildren = (gallery, i) => children(gallery, i).filter(child => !!child.children);
   current = gallery => gallery.getInstance();
-  loaded = gallery =>
-    gallery.toJSON().children.filter(child => !!child.children);
+  loaded = gallery => gallery.toJSON().children.filter(child => !!child.children);
+
 });
+
+beforeAll(() => {
+  // IMAGE
+  imgDesigner = create(<ImageDesigner {...images[0]} {...imageProps} />);
+  imgDesignerB = create(<ImageDesigner tag="div" {...images[0]} {...imageProps} />);
+  imgDesignerD = create(<ImageDesigner timeout={2000} {...images[0]} {...imageProps} />);
+  imageInstance = imgDesigner.root;
+  imageInstanceB = imgDesignerB.root;
+  updatedInstance = imgDesigner.getInstance();
+  updatedInstanceB = imgDesignerB.getInstance();
+  updatedInstanceD = imgDesignerD.getInstance();
+})
 
 afterEach(() => {
   gallery.unmount();
 });
 
-test("exports React component as default and dependent ImageDesigner as named", () => {
+test("[Gallery] exports React component as default and dependent Image as named", () => {
   expect(typeof Gallery).toBe("function");
-  expect(typeof ImageDesigner).toBe("function");
+  expect(typeof Image).toBe("function");
 });
 
-test("# of images given + controls + thumbnails should equal the children (when inview is less than props.images)", () => {
+test("[Gallery] # of images given + controls + thumbnails should equal the children (when inview is less than props.images)", () => {
   expect(gallery.toJSON().children.length).toEqual(
     instance.props.images.length
   );
 });
 
-test("duplicates props.images until it exceeds inview + advance * 2", () => {
+test("[Gallery] duplicates props.images until it exceeds inview + advance * 2", () => {
   const newGallery = createGallery({ inview: ids.length });
   expect(newGallery.toJSON().children.length).toEqual(
     instance.props.images.length * 2
@@ -65,11 +99,11 @@ test("duplicates props.images until it exceeds inview + advance * 2", () => {
   newGallery.unmount();
 });
 
-test("only loads images that are visible when initialized", () => {
+test("[Gallery] only loads images that are visible when initialized", () => {
   expect(loaded(gallery).length).toEqual(current(gallery).settings.inview);
 });
 
-test("loads additional images as it advances", () => {
+test("[Gallery] loads additional images as it advances", () => {
   const prevLoad = loaded(gallery).length;
   current(gallery).slide();
   expect(loaded(gallery).length).toEqual(
@@ -77,7 +111,7 @@ test("loads additional images as it advances", () => {
   );
 });
 
-test("loads only thumbnails (and all thumbnails) on mount lightbox", () => {
+test("[Gallery] loads only thumbnails (and all thumbnails) on mount lightbox", () => {
   const lightbox = createGallery({ lightbox: true });
   expect(renderedChildren(lightbox, 0).length).toEqual(0);
   expect(renderedChildren(lightbox, 1).filter(c => c.children).length).toEqual(
@@ -86,7 +120,7 @@ test("loads only thumbnails (and all thumbnails) on mount lightbox", () => {
   lightbox.unmount();
 });
 
-test("expands and loads lightbox image on click", () => {
+test("[Gallery] expands and loads lightbox image on click", () => {
   const lightbox = render(
     <Gallery images={images} settings={{ lightbox: true }} {...props} />
   );
@@ -98,4 +132,48 @@ test("expands and loads lightbox image on click", () => {
   });
   expect(img.firstChild).toBeTruthy();
   lightbox.unmount();
+});
+
+test("[Image] defaults to img, else sets Image as background-image", () => {
+  expect(imgDesigner.toJSON().type).toBe("img");
+  expect(imgDesignerB.toJSON().props.style.backgroundImage).toBeTruthy();
+});
+
+test("[Image] creates an instance of Image when mounted", () => {
+  expect(updatedInstance.image.toString()).toMatch("[object HTMLImageElement]");
+});
+
+test("[Image] sets the onload property on the Image instance", () => {
+  updatedInstance.loadImage()
+  expect(updatedInstance.image.onload.toString()).toEqual(
+    updatedInstance.onLoad.toString()
+  );
+});
+
+test("[Image] sets the onerror property on the Image instance", () => {
+  expect(updatedInstance.image.onerror.toString()).toEqual(
+    updatedInstance.onError.toString()
+  );
+});
+
+test("[Image] loads placeholder image on first render", () => {
+  expect(updatedInstance.state.src).toEqual(imageInstance.props.placeholder);
+});
+
+test("[Image] updates src, or background-image (when type is not img), to full size image on load", () => {
+  updatedInstance.onLoad();
+  expect(updatedInstance.state.src).toEqual(imageInstance.props.src);
+  updatedInstanceB.onLoad();
+  expect(updatedInstanceB.state.src).toEqual(imageInstanceB.props.src);
+});
+
+test("[Image] does not immediately set image if timeout exists", () => {
+  updatedInstanceD.shouldLoad();
+  expect(updatedInstanceD.state.src).toEqual(imageInstance.props.placeholder);
+});
+
+test("[Image] sets image after timeout if timeout exists", () => {
+  setTimeout(() => {
+    expect(updatedInstanceD.state.src).toEqual(imageInstance.props.src);
+  }, updatedInstanceD.props.timeout + 1);
 });

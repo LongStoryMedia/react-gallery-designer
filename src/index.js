@@ -5,7 +5,7 @@ react-gallery-designer
 */
 
 import React, { PureComponent, createRef } from "react";
-import ImageDesigner from "react-image-designer";
+import ImageDesigner from "./ImageDesigner";
 import {
   isRight,
   isLeft,
