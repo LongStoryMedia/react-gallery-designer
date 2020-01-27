@@ -1,5 +1,6 @@
 import React from "react";
-import Gallery, { ImageDesigner } from "../src";
+import Gallery from "../src";
+import ImageDesigner from "../src/ImageDesigner"
 import { render, fireEvent } from "@testing-library/react";
 import { create } from "react-test-renderer";
 
@@ -71,7 +72,7 @@ beforeAll(() => {
   imgDesignerD = create(<ImageDesigner timeout={2000} {...images[0]} {...imageProps} />);
   imageInstance = imgDesigner.root;
   imageInstanceB = imgDesignerB.root;
-  updatedInstance = imgDesigner.getInstance();
+  updatedInstance = imgDesigner.getInstance()
   updatedInstanceB = imgDesignerB.getInstance();
   updatedInstanceD = imgDesignerD.getInstance();
 })

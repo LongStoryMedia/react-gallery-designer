@@ -5,7 +5,7 @@ react-gallery-designer
 */
 
 import React, { PureComponent, createRef } from "react";
-import ImageDesigner from "./ImageDesigner";
+import $ImageDesigner from "./ImageDesigner";
 import {
   isRight,
   isLeft,
@@ -26,7 +26,38 @@ if (typeof window !== "undefined") {
   require("raf-polyfill");
 }
 
-export { ImageDesigner };
+export class ImageDesigner extends PureComponent {
+  state = { isLoaded: false };
+  componentDidMount() {
+    const { src, placeholder } = this.state;
+    this.setState({ src, placeholder });
+  }
+  componentDidUpdate(prevProps, prevState) {
+    const { src, placeholder } = this.state;
+    if (!prevState.src && !prevState.placeholder && src && placeholder) {
+      this.setState({ isLoaded: true });
+    }
+  }
+  render() {
+    const { tag } = this.props;
+    const { src, placeholder, isLoaded } = this.state;
+    const imgProps = {
+      ...this.props,
+      src,
+      placeholder,
+      tag
+    };
+    return isLoaded ? (
+      tag !== "img" ? (
+        <$ImageDesigner {...imgProps} />
+      ) : (
+        <$ImageDesigner>{this.props.children}</$ImageDesigner>
+      )
+    ) : (
+      ""
+    );
+  }
+}
 
 export default class Gallery extends PureComponent {
   state = {
@@ -214,13 +245,9 @@ export default class Gallery extends PureComponent {
       //Honestly - I don't even remember the math here... suffice it to say it works
       //TODO: figure out a more elegant way to calculate all these variables.
       const positionAdjust =
-        "book" === animation && lo === 1
+        "book" === animation && (lo === 1 || lo === 2)
           ? 200
-          : "book" === animation && lo === 2
-          ? 200
-          : "book" === animation && ro === 2
-          ? 200
-          : "book" === animation && ro === 3
+          : "book" === animation && (ro === 2 || ro === 3)
           ? 200
           : "flip" === animation
           ? 100
@@ -729,7 +756,7 @@ export default class Gallery extends PureComponent {
                 {img.children}
                 {img.isLoaded &&
                   (tag !== "img" ? (
-                    <ImageDesigner {...imgProps(img, i)}>
+                    <$ImageDesigner {...imgProps(img, i)}>
                       {showcaptions && (
                         <div
                           className={captionClass}
@@ -744,9 +771,9 @@ export default class Gallery extends PureComponent {
                           }}
                         />
                       )}
-                    </ImageDesigner>
+                    </$ImageDesigner>
                   ) : (
-                    <ImageDesigner {...imgProps(img, i)} />
+                    <$ImageDesigner {...imgProps(img, i)} />
                   ))}
               </BoxTag>
             ))}
