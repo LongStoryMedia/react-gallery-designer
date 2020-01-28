@@ -5,7 +5,7 @@ react-gallery-designer
 */
 
 import React, { PureComponent, createRef } from "react";
-import $ImageDesigner from "./ImageDesigner";
+import ImageDesigner from "./ImageDesigner";
 import {
   isRight,
   isLeft,
@@ -26,38 +26,7 @@ if (typeof window !== "undefined") {
   require("raf-polyfill");
 }
 
-export class ImageDesigner extends PureComponent {
-  state = { isLoaded: false };
-  componentDidMount() {
-    const { src, placeholder } = this.state;
-    this.setState({ src, placeholder });
-  }
-  componentDidUpdate(prevProps, prevState) {
-    const { src, placeholder } = this.state;
-    if (!prevState.src && !prevState.placeholder && src && placeholder) {
-      this.setState({ isLoaded: true });
-    }
-  }
-  render() {
-    const { tag } = this.props;
-    const { src, placeholder, isLoaded } = this.state;
-    const imgProps = {
-      ...this.props,
-      src,
-      placeholder,
-      tag
-    };
-    return isLoaded ? (
-      tag !== "img" ? (
-        <$ImageDesigner {...imgProps} />
-      ) : (
-        <$ImageDesigner>{this.props.children}</$ImageDesigner>
-      )
-    ) : (
-      ""
-    );
-  }
-}
+export {ImageDesigner}
 
 export default class Gallery extends PureComponent {
   state = {
@@ -756,7 +725,7 @@ export default class Gallery extends PureComponent {
                 {img.children}
                 {img.isLoaded &&
                   (tag !== "img" ? (
-                    <$ImageDesigner {...imgProps(img, i)}>
+                    <ImageDesigner {...imgProps(img, i)}>
                       {showcaptions && (
                         <div
                           className={captionClass}
@@ -771,9 +740,9 @@ export default class Gallery extends PureComponent {
                           }}
                         />
                       )}
-                    </$ImageDesigner>
+                    </ImageDesigner>
                   ) : (
-                    <$ImageDesigner {...imgProps(img, i)} />
+                    <ImageDesigner {...imgProps(img, i)} />
                   ))}
               </BoxTag>
             ))}

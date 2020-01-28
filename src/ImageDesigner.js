@@ -7,8 +7,6 @@ import React, { PureComponent, createRef } from "react";
 import { inView, throttle } from "./utils";
 
 export default class ImageDesigner extends PureComponent {
-  image = new Image();
-
   state = {
     src: this.props.placeholder || "",
     ref: createRef(),
@@ -39,10 +37,14 @@ export default class ImageDesigner extends PureComponent {
   }
 
   componentDidMount() {
+    this.image = new Image();
     const { lazy } = this.state;
     this.setState({ mounted: true });
     if (lazy) window.addEventListener("scroll", this.throttleLoad);
     window.addEventListener("load", this.shouldLoad);
+    // do this with throttled scroll listener because sometimes an images scrolls on screen between executions
+    // in which case the load event wont trigger. so this just checks the current screen every second 
+    // to see if there are any unloaded images there.
     this.checkLocation = setInterval(
       () => this.shouldLoad(),
       this.props.scanScreen || 1000
