@@ -45,7 +45,7 @@
       "<rootDir>/?(src/)?(**/)__tests__/?(**/)*.{js,jsx,mjs}"
     ],
     "transform": {
-      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest"
+      "^.+\\.[t|j]sx?$": "babel-jest"
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
@@ -69,6 +69,7 @@
     "@babel/preset-react": "^7.8.7",
     "@testing-library/react": "^8.0.7",
     "babel-eslint": "^10.0.2",
+    "babel-jest": "^26.0.1",
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^1.0.0",
     "core-js": "^2.6.3",
