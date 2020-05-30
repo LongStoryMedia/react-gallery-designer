@@ -17,8 +17,8 @@ export default class ImageDesigner extends PureComponent {
       ? {}
       : {
           filter: "blur(5px)",
-          transition: "filter 0.85s ease-in-out"
-        }
+          transition: "filter 0.85s ease-in-out",
+        },
   };
 
   throttleLoad = throttle(() => this.shouldLoad(), 500);
@@ -43,7 +43,7 @@ export default class ImageDesigner extends PureComponent {
     if (lazy) window.addEventListener("scroll", this.throttleLoad);
     window.addEventListener("load", this.shouldLoad);
     // do this with throttled scroll listener because sometimes an images scrolls on screen between executions
-    // in which case the load event wont trigger. so this just checks the current screen every second 
+    // in which case the load event wont trigger. so this just checks the current screen every second
     // to see if there are any unloaded images there.
     this.checkLocation = setInterval(
       () => this.shouldLoad(),
@@ -79,14 +79,14 @@ export default class ImageDesigner extends PureComponent {
     this.setState({
       src: this.props.src,
       styles: { transition: "filter 0.85s ease-in-out", filter: "" },
-      loaded: true
+      loaded: true,
     });
     window.removeEventListener("scroll", this.throttleLoad);
   };
 
-  onError = e => this.props.onError && this.props.onError(e);
+  onError = (e) => this.props.onError && this.props.onError(e);
 
-  loadImage = src => {
+  loadImage = (src) => {
     if (this.image.src === this.state.src && this.image.src && this.state.src)
       return clearInterval(this.checkLocation);
     const { srcset, sizes } = this.props;
@@ -119,7 +119,7 @@ export default class ImageDesigner extends PureComponent {
       srcset,
       sizes,
       id,
-      noImage
+      noImage,
     } = this.props;
 
     const { src, styles, ref, loaded } = this.state;
@@ -128,10 +128,11 @@ export default class ImageDesigner extends PureComponent {
 
     const ImgTag = `${t}`;
 
-    const isImg = tag === "img";
+    const isImg = tag.toLowerCase() === "img";
 
     const dynamicStyles = {
       ...styles,
+      ...style,
       backgroundColor: (style && style.backgroundColor) || "transparent",
       backgroundImage: noImage || isImg ? "" : `url("${src}")`,
       backgroundPosition: !position ? "center" : position,
@@ -140,14 +141,12 @@ export default class ImageDesigner extends PureComponent {
       backgroundAttachment: "initial",
       backgroundSize: !contain ? "cover" : "contain",
       backgroundRepeat: !repeat ? "no-repeat" : "repeat",
-      height:
-        tag === "img"
-          ? (style && style.height) || ""
-          : (style && style.height) || "200px",
-      ...style
+      height: isImg
+        ? (style && style.height) || ""
+        : (style && style.height) || "200px",
     };
 
-    return (
+    return isImg ? (
       <ImgTag
         alt={alt ? alt : src}
         srcSet={loaded ? srcset : ""}
@@ -158,6 +157,10 @@ export default class ImageDesigner extends PureComponent {
         id={id}
         ref={ref}
       >
+        {children}
+      </ImgTag>
+    ) : (
+      <ImgTag style={dynamicStyles} className={className} id={id} ref={ref}>
         {children}
       </ImgTag>
     );
