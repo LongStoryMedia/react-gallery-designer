@@ -12,7 +12,7 @@ export default class ImageDesigner extends PureComponent {
     ref: createRef(),
     mounted: false,
     onScreen: false,
-    lazy: typeof this.props.lazy === "undefined" || this.props.lazy,
+    lazy: typeof this.props.lazy === "undefined" || this.props.lazy, // true by default
     styles: this.props.noImage
       ? {}
       : {
@@ -40,8 +40,10 @@ export default class ImageDesigner extends PureComponent {
     this.image = new Image();
     const { lazy } = this.state;
     this.setState({ mounted: true });
-    if (lazy) window.addEventListener("scroll", this.throttleLoad);
-    window.addEventListener("load", this.shouldLoad);
+    if (typeof window !== "undefined") {
+      if (lazy) window.addEventListener("scroll", this.throttleLoad);
+      window.addEventListener("load", this.shouldLoad);
+    }
     // do this with throttled scroll listener because sometimes an images scrolls on screen between executions
     // in which case the load event wont trigger. so this just checks the current screen every second
     // to see if there are any unloaded images there.
@@ -57,7 +59,7 @@ export default class ImageDesigner extends PureComponent {
       this.image.onload = null;
       this.image.onerror = null;
     }
-    if (this.state.lazy)
+    if (this.state.lazy && typeof window !== "undefined")
       window.removeEventListener("scroll", this.throttleLoad);
   }
 
@@ -81,7 +83,9 @@ export default class ImageDesigner extends PureComponent {
       styles: { transition: "filter 0.85s ease-in-out", filter: "" },
       loaded: true,
     });
-    window.removeEventListener("scroll", this.throttleLoad);
+    if (typeof window !== "undefined") {
+      window.removeEventListener("scroll", this.throttleLoad);
+    }
   };
 
   onError = (e) => this.props.onError && this.props.onError(e);
