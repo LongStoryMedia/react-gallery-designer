@@ -4,10 +4,10 @@ const pos = element => {
   if (element && element.getBoundingClientRect) {
     const rect = element.getBoundingClientRect();
     return {
-      top: rect.top + window.pageYOffset,
-      left: rect.left + window.pageXOffset,
-      bottom: rect.bottom + window.pageYOffset,
-      right: rect.right + window.pageXOffset
+      top: typeof window !== "undefined" ? rect.top + window.pageYOffset : 0,
+      left: typeof window !== "undefined" ? rect.left + window.pageXOffset : 0,
+      bottom: typeof window !== "undefined" ? rect.bottom + window.pageYOffset : 0,
+      right: typeof window !== "undefined" ? rect.right + window.pageXOffset : 0
     };
   }
   return false;
@@ -32,10 +32,10 @@ export const throttle = function(func, interval) {
 export const inView = element => {
   if (isHidden(element) || !element) return false;
 
-  let top = window.pageYOffset;
-  let left = window.pageXOffset;
-  let bottom = top + window.innerHeight;
-  let right = left + window.innerWidth;
+  let top = typeof window !== "undefined" ? window.pageYOffset : 0;
+  let left = typeof window !== "undefined" ? window.pageXOffset : 0;
+  let bottom = typeof window !== "undefined" ? top + window.innerHeight : 0;
+  let right = typeof window !== "undefined" ? left + window.innerWidth : 0;
 
   const elementPosition = pos(element) || { top: 0, left: 0 };
 
@@ -128,4 +128,4 @@ export const tryDecode = string => {
   }
 };
 
-export const vh = (arg, ref) => ((((ref && ref.clientHeight) || window.innerHeight) / 100) * arg);
+export const vh = (arg, ref) => ((((ref && ref.clientHeight) || typeof window !== "undefined" ? window.innerHeight : 1200) / 100) * arg);
