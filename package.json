@@ -44,9 +44,6 @@
     "testMatch": [
       "<rootDir>/?(src/)?(**/)__tests__/?(**/)*.{js,jsx,mjs}"
     ],
-    "transform": {
-      "^.+\\.[t|j]sx?$": "babel-jest"
-    },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
     ]

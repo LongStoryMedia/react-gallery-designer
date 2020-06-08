@@ -22,7 +22,7 @@ const props = {
   className: "container"
 };
 
-global.Image = Image;
+// global.Image = new Image();
 
 const imageProps = {
   style: {
@@ -65,17 +65,17 @@ beforeEach(() => {
 
 });
 
-beforeAll(() => {
-  // IMAGE
-  imgDesigner = create(<ImageDesigner {...images[0]} {...imageProps} />);
-  imgDesignerB = create(<ImageDesigner tag="div" {...images[0]} {...imageProps} />);
-  imgDesignerD = create(<ImageDesigner timeout={2000} {...images[0]} {...imageProps} />);
-  imageInstance = imgDesigner.root;
-  imageInstanceB = imgDesignerB.root;
-  updatedInstance = imgDesigner.getInstance()
-  updatedInstanceB = imgDesignerB.getInstance();
-  updatedInstanceD = imgDesignerD.getInstance();
-})
+// beforeAll(() => {
+//   // IMAGE
+//   imgDesigner = create(<ImageDesigner {...images[0]} {...imageProps} />);
+//   imgDesignerB = create(<ImageDesigner tag="div" {...images[0]} {...imageProps} />);
+//   imgDesignerD = create(<ImageDesigner timeout={2000} {...images[0]} {...imageProps} />);
+//   imageInstance = imgDesigner.root;
+//   imageInstanceB = imgDesignerB.root;
+//   updatedInstance = imgDesigner.getInstance()
+//   updatedInstanceB = imgDesignerB.getInstance();
+//   updatedInstanceD = imgDesignerD.getInstance();
+// })
 
 afterEach(() => {
   gallery.unmount();
@@ -83,7 +83,7 @@ afterEach(() => {
 
 test("[Gallery] exports React component as default and dependent Image as named", () => {
   expect(typeof Gallery).toBe("function");
-  expect(typeof Image).toBe("function");
+  // expect(typeof Image).toBe("function");
 });
 
 test("[Gallery] # of images given + controls + thumbnails should equal the children (when inview is less than props.images)", () => {
@@ -135,46 +135,46 @@ test("[Gallery] expands and loads lightbox image on click", () => {
   lightbox.unmount();
 });
 
-test("[Image] defaults to img, else sets Image as background-image", () => {
-  expect(imgDesigner.toJSON().type).toBe("img");
-  expect(imgDesignerB.toJSON().props.style.backgroundImage).toBeTruthy();
-});
+// test("[Image] defaults to img, else sets Image as background-image", () => {
+//   expect(imgDesigner.toJSON().type).toBe("img");
+//   expect(imgDesignerB.toJSON().props.style.backgroundImage).toBeTruthy();
+// });
 
-test("[Image] creates an instance of Image when mounted", () => {
-  expect(updatedInstance.image.toString()).toMatch("[object HTMLImageElement]");
-});
+// test("[Image] creates an instance of Image when mounted", () => {
+//   expect(updatedInstance.image.toString()).toMatch("[object HTMLImageElement]");
+// });
 
-test("[Image] sets the onload property on the Image instance", () => {
-  updatedInstance.loadImage()
-  expect(updatedInstance.image.onload.toString()).toEqual(
-    updatedInstance.onLoad.toString()
-  );
-});
+// test("[Image] sets the onload property on the Image instance", () => {
+//   updatedInstance.loadImage()
+//   expect(updatedInstance.image.onload.toString()).toEqual(
+//     updatedInstance.onLoad.toString()
+//   );
+// });
 
-test("[Image] sets the onerror property on the Image instance", () => {
-  expect(updatedInstance.image.onerror.toString()).toEqual(
-    updatedInstance.onError.toString()
-  );
-});
+// test("[Image] sets the onerror property on the Image instance", () => {
+//   expect(updatedInstance.image.onerror.toString()).toEqual(
+//     updatedInstance.onError.toString()
+//   );
+// });
 
-test("[Image] loads placeholder image on first render", () => {
-  expect(updatedInstance.state.src).toEqual(imageInstance.props.placeholder);
-});
+// test("[Image] loads placeholder image on first render", () => {
+//   expect(updatedInstance.state.src).toEqual(imageInstance.props.placeholder);
+// });
 
-test("[Image] updates src, or background-image (when type is not img), to full size image on load", () => {
-  updatedInstance.onLoad();
-  expect(updatedInstance.state.src).toEqual(imageInstance.props.src);
-  updatedInstanceB.onLoad();
-  expect(updatedInstanceB.state.src).toEqual(imageInstanceB.props.src);
-});
+// test("[Image] updates src, or background-image (when type is not img), to full size image on load", () => {
+//   updatedInstance.onLoad();
+//   expect(updatedInstance.state.src).toEqual(imageInstance.props.src);
+//   updatedInstanceB.onLoad();
+//   expect(updatedInstanceB.state.src).toEqual(imageInstanceB.props.src);
+// });
 
-test("[Image] does not immediately set image if timeout exists", () => {
-  updatedInstanceD.shouldLoad();
-  expect(updatedInstanceD.state.src).toEqual(imageInstance.props.placeholder);
-});
+// test("[Image] does not immediately set image if timeout exists", () => {
+//   updatedInstanceD.shouldLoad();
+//   expect(updatedInstanceD.state.src).toEqual(imageInstance.props.placeholder);
+// });
 
-test("[Image] sets image after timeout if timeout exists", () => {
-  setTimeout(() => {
-    expect(updatedInstanceD.state.src).toEqual(imageInstance.props.src);
-  }, updatedInstanceD.props.timeout + 1);
-});
+// test("[Image] sets image after timeout if timeout exists", () => {
+//   setTimeout(() => {
+//     expect(updatedInstanceD.state.src).toEqual(imageInstance.props.src);
+//   }, updatedInstanceD.props.timeout + 1);
+// });
