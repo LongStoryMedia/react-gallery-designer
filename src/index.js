@@ -641,14 +641,14 @@ export default class Gallery extends PureComponent {
             ? isObject(imgStyle, ["backgroundColor"], "#fff")
             : isObject(imgStyle, ["backgroundColor"]),
         margin: lightbox ? "5vh auto" : "",
-        ...imgStyle,
-        ...img.style,
         visibility: img.visibility,
         opacity: "fade" !== animation ? 1 : img.opacity,
         ...prefix("transition", transition),
         height: slideHeight,
         maxHeight: lightbox ? "90vh" : "",
-        maxWidth: lightbox ? "90vw" : ""
+        maxWidth: lightbox ? "90vw" : "",
+        ...imgStyle,
+        ...img.style
       },
       className: imgClass,
       contain: contain,
